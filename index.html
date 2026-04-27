@@ -20,6 +20,9 @@
             background-color: var(--obsidian);
             color: #e5e5e5;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .serif-font { font-family: 'Playfair Display', serif; }
         
@@ -34,17 +37,28 @@
             border: 1px solid rgba(197, 160, 89, 0.2);
             box-shadow: 0 20px 50px rgba(0,0,0,0.6);
             transition: border-color 0.3s ease;
+            width: 100%;
         }
         .luxury-card:hover {
             border-color: rgba(197, 160, 89, 0.5);
         }
 
         .fretboard-container {
+            width: 100%;
             overflow-x: auto;
             scrollbar-width: thin;
             scrollbar-color: var(--gold) transparent;
             padding-bottom: 10px;
+            display: flex;
+            justify-content: flex-start; /* Allows scrolling if overflow */
         }
+        
+        @media (min-width: 1050px) {
+            .fretboard-container {
+                justify-content: center; /* Centers if screen is wide enough */
+            }
+        }
+
         .fretboard-container::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
         
         .fret-num { font-size: 10px; fill: #666; font-weight: 600; letter-spacing: 1px; }
@@ -109,26 +123,26 @@
 </head>
 <body class="pb-28">
 
-    <header class="p-12 pt-20 relative text-center">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[#c5a059]/10 blur-[150px] rounded-full"></div>
-        <div class="inline-block px-4 py-1 mb-6 text-[9px] font-bold tracking-[0.4em] border border-[#c5a059]/40 text-[#c5a059] rounded-sm">CURATED MASTERY</div>
+    <header class="w-full max-w-6xl p-12 pt-20 relative text-center mx-auto">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] h-[300px] bg-[#c5a059]/10 blur-[150px] rounded-full"></div>
+        <div class="inline-block px-4 py-1 mb-6 text-[9px] font-bold tracking-[0.4em] border border-[#c5a059]/40 text-[#c5a059] rounded-sm uppercase">CURATED MASTERY</div>
         <h1 class="text-5xl md:text-7xl serif-font font-bold mb-4 italic tracking-tight">
             Codguy's <span class="gold-gradient">Guitar</span> World
         </h1>
         <p class="text-slate-500 font-light text-sm tracking-[0.2em] uppercase">Bespoke Theory & Fretboard Visualization</p>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6">
+    <main class="w-full max-w-6xl mx-auto px-6 flex flex-col items-center">
         
         <div class="luxury-card rounded-sm p-8 mb-12">
-            <div class="flex items-center justify-between mb-10 border-b border-[#c5a059]/20 pb-6">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-10 border-b border-[#c5a059]/20 pb-6 gap-4">
                 <h2 class="text-2xl serif-font italic text-[#c5a059]">Fretboard Explorer</h2>
-                <div class="hidden md:flex gap-4 text-[10px] font-bold tracking-widest text-slate-500">
+                <div class="flex gap-4 text-[10px] font-bold tracking-widest text-slate-500">
                     <span>ANALYZE</span> / <span>VISUALIZE</span> / <span>PRACTICE</span>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 w-full">
                 <div class="space-y-2">
                     <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Root Tone</label>
                     <select id="keySelect" onchange="renderFretboard()">
@@ -193,8 +207,9 @@
                 </div>
             </div>
 
+            <!-- Enhanced responsive container for SVG -->
             <div class="fretboard-container">
-                <svg id="fretboardSvg" width="1050" height="230" viewBox="-40 0 1050 230">
+                <svg id="fretboardSvg" width="1050" height="230" viewBox="-40 0 1050 230" style="max-width: none;">
                     <rect x="0" y="20" width="1000" height="150" fill="#121212" rx="2"/>
                     <g id="stringsG"></g>
                     <g id="fretsG"></g>
@@ -204,7 +219,7 @@
                 </svg>
             </div>
 
-            <div class="mt-8 flex justify-center gap-10">
+            <div class="mt-8 flex flex-wrap justify-center gap-6 md:gap-10">
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-2 rounded-full bg-[#c5a059] shadow-[0_0_10px_#c5a059]"></div>
                     <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Tonic (Root)</span>
@@ -220,8 +235,8 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            <div class="md:col-span-2 luxury-card p-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12 w-full">
+            <div class="lg:col-span-2 luxury-card p-8">
                 <h3 class="serif-font text-2xl italic text-[#c5a059] mb-6">Interval Theory Notes</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <table class="theory-table w-full text-left">
@@ -259,7 +274,7 @@
                 </div>
             </div>
 
-            <div class="space-y-6">
+            <div class="space-y-6 w-full">
                 <div class="luxury-card p-6 space-y-4">
                     <h3 class="serif-font text-lg italic border-b border-[#c5a059]/20 pb-2">Mastery Resources</h3>
                     <div class="flex flex-col gap-3 pt-2">
@@ -292,12 +307,10 @@
         };
 
         const STRUCTURES = {
-            // Arpeggios
             maj7: [0, 4, 7, 11],
             dom7: [0, 4, 7, 10],
             min7: [0, 3, 7, 10],
             m7b5: [0, 3, 6, 10],
-            // Modes
             major: [0, 2, 4, 5, 7, 9, 11],
             dorian: [0, 2, 3, 5, 7, 9, 10],
             phrygian: [0, 1, 3, 5, 7, 8, 10],
@@ -305,7 +318,6 @@
             mixolydian: [0, 2, 4, 5, 7, 9, 10],
             minor: [0, 2, 3, 5, 7, 8, 10],
             locrian: [0, 1, 3, 5, 6, 8, 10],
-            // Pentatonic
             pentatonicMajor: [0, 2, 4, 7, 9],
             pentatonicMinor: [0, 3, 5, 7, 10],
             blues: [0, 3, 5, 6, 7, 10]
