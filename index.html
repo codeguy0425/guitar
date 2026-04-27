@@ -170,12 +170,13 @@
                 <div class="mode-toggle">
                     <button id="modeScale" class="mode-btn active" onclick="switchMode('scale')">Scale</button>
                     <button id="modeTriad" class="mode-btn" onclick="switchMode('triad')">Triad</button>
-                    <button id="modeArp" class="mode-btn" onclick="switchMode('arpeggio')">Arp</button>
+                    <button id="modeArpeggio" class="mode-btn" onclick="switchMode('arpeggio')">Arp</button>
                 </div>
                 <div id="selectorContainer" class="space-y-1">
                     <label id="selectLabel" class="text-[9px] text-slate-500 uppercase font-bold">Select Scale</label>
                     <select id="scaleSelect" class="mode-select" onchange="renderFretboard()">
                         <option value="pentatonicMinor" selected>Minor Pentatonic</option>
+                        <option value="pentatonicMajor">Major Pentatonic</option>
                         <option value="major">Major Scale</option>
                         <option value="minor">Natural Minor</option>
                         <option value="blues">Blues Scale</option>
@@ -246,19 +247,24 @@
 
     <script>
         const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-        // Tuning reversed for standard top-to-bottom visual order (Low E at bottom)
-        const TUNING = [4, 11, 7, 2, 9, 4]; // E2 B3 G3 D3 A2 E2
+        const TUNING = [4, 11, 7, 2, 9, 4]; // High E to Low E order
         const INTERVAL_LABELS = { 0: 'R', 1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7' };
         
         const STRUCTURES = {
-            maj: [0, 4, 7], min: [0, 3, 7], dim: [0, 3, 6],
-            major: [0, 2, 4, 5, 7, 9, 11], minor: [0, 2, 3, 5, 7, 8, 10],
-            pentatonicMinor: [0, 3, 5, 7, 10], blues: [0, 3, 5, 6, 7, 10],
-            maj7: [0, 4, 7, 11], min7: [0, 3, 7, 10], dom7: [0, 4, 7, 10],
+            maj: [0, 4, 7], 
+            min: [0, 3, 7], 
+            dim: [0, 3, 6],
+            major: [0, 2, 4, 5, 7, 9, 11], 
+            minor: [0, 2, 3, 5, 7, 8, 10],
+            pentatonicMinor: [0, 3, 5, 7, 10],
+            pentatonicMajor: [0, 2, 4, 7, 9],
+            blues: [0, 3, 5, 6, 7, 10],
+            maj7: [0, 4, 7, 11], 
+            min7: [0, 3, 7, 10], 
+            dom7: [0, 4, 7, 10],
             none: [0]
         };
 
-        // Note: 0 is High E, 5 is Low E
         const STRING_GROUPS = { 
             all: [0, 1, 2, 3, 4, 5], 
             top: [3, 4, 5], 
@@ -294,9 +300,14 @@
         function switchMode(mode) {
             currentActiveMode = mode;
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('mode' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
+            const btnId = mode === 'arpeggio' ? 'modeArpeggio' : 'mode' + mode.charAt(0).toUpperCase() + mode.slice(1);
+            const btn = document.getElementById(btnId);
+            if(btn) btn.classList.add('active');
+
             document.querySelectorAll('.mode-select').forEach(sel => sel.classList.add('hidden'));
-            document.getElementById(mode + 'Select').classList.remove('hidden');
+            const selectEl = document.getElementById(mode + 'Select');
+            if(selectEl) selectEl.classList.remove('hidden');
+
             document.getElementById('selectLabel').innerText = 'Select ' + mode.charAt(0).toUpperCase() + mode.slice(1);
             renderFretboard();
         }
@@ -312,9 +323,7 @@
             const stringGroupName = document.getElementById('stringGroupSelect').value;
             const rootIndex = NOTES.indexOf(currentKey);
             
-            // Strings to show NOTES on
             const activeStrings = STRING_GROUPS[stringGroupName];
-            
             const activeNoteValues = isOctaveOnly 
                 ? [rootIndex] 
                 : (STRUCTURES[structureKey] || [0]).map(i => (rootIndex + i) % 12);
@@ -329,7 +338,6 @@
             bg.setAttribute('width', totalWidth);
             svg.setAttribute('viewBox', `-3 0 ${totalWidth + 10} 200`);
 
-            // Markers (Dots on neck)
             const markers = [3, 5, 7, 9, 12, 15];
             markers.forEach(m => {
                 if (m > NUM_FRETS) return;
@@ -345,7 +353,6 @@
                 }
             });
 
-            // Frets
             for (let i = 0; i <= NUM_FRETS; i++) {
                 const x = i * FRET_WIDTH;
                 const fret = document.createElementNS("http://www.w3.org/2000/svg", "line");
@@ -363,17 +370,15 @@
                 document.getElementById('labelsG').appendChild(num);
             }
 
-            // Strings & Notes
             for(let s = 0; s < 6; s++) {
                 const y = START_Y + (s * STRING_SPACE);
                 const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
                 line.setAttribute("x1", 0); line.setAttribute("y1", y);
                 line.setAttribute("x2", totalWidth); line.setAttribute("y2", y);
-                line.setAttribute("stroke", "#444"); // All strings always visible
+                line.setAttribute("stroke", "#444");
                 line.setAttribute("stroke-width", 1.5 + (s * 0.4));
                 document.getElementById('stringsG').appendChild(line);
 
-                // ONLY DRAW NOTES if string is in the active group
                 if (!activeStrings.includes(s)) continue;
 
                 const openNoteIdx = TUNING[s];
@@ -386,13 +391,16 @@
                         const x = f === 0 ? -15 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
                         
                         let color = "#e5e5e5"; 
-                        if (isRoot) color = "#c5a059"; 
-                        else if (currentActiveMode !== 'scale') {
+                        if (isRoot) {
+                            color = "#c5a059"; 
+                        } else if (currentActiveMode === 'triad' || currentActiveMode === 'arpeggio') {
                             if (relIdx === 3 || relIdx === 4) color = "#94a3b8"; 
-                            if (relIdx === 6 || relIdx === 7 || relIdx === 8) color = "#64748b"; 
-                        } else if (structureKey === 'blues' && relIdx === 6) {
+                            else if (relIdx === 6 || relIdx === 7 || relIdx === 8) color = "#64748b"; 
+                            else if (relIdx === 10 || relIdx === 11) color = "#475569"; 
+                        } else if (currentActiveMode === 'scale' && structureKey === 'blues' && relIdx === 6) {
                             color = "#38bdf8"; 
                         }
+                        
                         drawNote(x, y, label, isRoot, color);
                     }
                 }
