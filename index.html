@@ -9,7 +9,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="GuitarWorld">
-    <!-- Updated Desktop/Mobile Home Screen Icon -->
     <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/512/c5a059/guitar.png">
     <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/100/c5a059/guitar.png">
     
@@ -23,6 +22,8 @@
             --obsidian: #0f0f0f;
             --charcoal: #1a1a1a;
             --blue-note: #38bdf8;
+            --triad-3rd: #94a3b8; /* Slate */
+            --triad-5th: #64748b; /* Darker Slate */
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -48,9 +49,7 @@
             transition: border-color 0.3s ease;
             width: 100%;
         }
-        .luxury-card:hover {
-            border-color: rgba(197, 160, 89, 0.5);
-        }
+        .luxury-card:hover { border-color: rgba(197, 160, 89, 0.5); }
 
         .fretboard-container {
             width: 100%;
@@ -116,9 +115,7 @@
             transition: .4s;
             z-index: 0;
         }
-        input:checked + .slider:before {
-            transform: translateX(calc(100% + 8px));
-        }
+        input:checked + .slider:before { transform: translateX(calc(100% + 8px)); }
         .slider span { z-index: 1; transition: color 0.4s; }
         input:not(:checked) + .slider .label-off { color: #000; }
         input:checked + .slider .label-on { color: #000; }
@@ -155,7 +152,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10 w-full">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-10 w-full">
                 <div class="space-y-2">
                     <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Root Tone</label>
                     <select id="keySelect" onchange="renderFretboard()">
@@ -176,13 +173,13 @@
                 <div class="space-y-2">
                     <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Structure</label>
                     <select id="scaleSelect" onchange="renderFretboard()">
-                        <optgroup label="Triads">
+                        <optgroup label="Triads (High Contrast Mode)">
                             <option value="maj">Major Triad (1 3 5)</option>
                             <option value="min">Minor Triad (1 b3 5)</option>
                             <option value="dim">Diminished Triad (1 b3 b5)</option>
                             <option value="aug">Augmented Triad (1 3 #5)</option>
                         </optgroup>
-                        <optgroup label="7th Arpeggios">
+                        <optgroup label="7th Arpeggios (High Contrast Mode)">
                             <option value="maj7">Major 7th (1 3 5 7)</option>
                             <option value="dom7">Dominant 7th (1 3 5 b7)</option>
                             <option value="min7">Minor 7th (1 b3 5 b7)</option>
@@ -202,6 +199,16 @@
                             <option value="pentatonicMinor" selected>Pentatonic Minor</option>
                             <option value="blues">Blues Scale</option>
                         </optgroup>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">String Set</label>
+                    <select id="stringGroupSelect" onchange="renderFretboard()">
+                        <option value="all">Full Fretboard</option>
+                        <option value="top">Top Strings (E A D)</option>
+                        <option value="middle">Middle Strings (A D G)</option>
+                        <option value="inner">Inner Strings (D G B)</option>
+                        <option value="bottom">Bottom Strings (G B E)</option>
                     </select>
                 </div>
                 <div class="space-y-2">
@@ -240,15 +247,25 @@
             <div class="mt-8 flex flex-wrap justify-center gap-6 md:gap-10">
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-2 rounded-full bg-[#c5a059] shadow-[0_0_10px_#c5a059]"></div>
-                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Tonic (Root)</span>
+                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Tonic</span>
+                </div>
+                <div id="legendIntervals" class="contents">
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-[#94a3b8] shadow-[0_0_10px_#94a3b8]"></div>
+                        <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">3rd Degree</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-[#64748b] shadow-[0_0_10px_#64748b]"></div>
+                        <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">5th Degree</span>
+                    </div>
                 </div>
                 <div class="flex items-center gap-3" id="blueNoteLegend" style="display: none;">
                     <div class="w-2 h-2 rounded-full bg-[#38bdf8] shadow-[0_0_10px_#38bdf8]"></div>
-                    <span class="text-[10px] font-semibold tracking-widest text-[#38bdf8] uppercase">The Blue Note (b5)</span>
+                    <span class="text-[10px] font-semibold tracking-widest text-[#38bdf8] uppercase">The Blue Note</span>
                 </div>
-                <div class="flex items-center gap-3">
+                <div id="legendScale" class="flex items-center gap-3" style="display: none;">
                     <div class="w-2 h-2 rounded-full bg-slate-100"></div>
-                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Degrees</span>
+                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Other Degrees</span>
                 </div>
             </div>
         </div>
@@ -259,10 +276,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <table class="theory-table w-full text-left">
                         <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Distance</th>
-                            </tr>
+                            <tr><th>Name</th><th>Distance</th></tr>
                         </thead>
                         <tbody>
                             <tr><td>Root (1)</td><td>0 Semitones</td></tr>
@@ -275,10 +289,7 @@
                     </table>
                     <table class="theory-table w-full text-left">
                         <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Distance</th>
-                            </tr>
+                            <tr><th>Name</th><th>Distance</th></tr>
                         </thead>
                         <tbody>
                             <tr class="blue-note-highlight"><td>The Blue Note (b5)</td><td>6 Semitones</td></tr>
@@ -297,17 +308,14 @@
                     <h3 class="serif-font text-lg italic border-b border-[#c5a059]/20 pb-2">Mastery Resources</h3>
                     <div class="flex flex-col gap-3 pt-2">
                         <a href="https://www.ultimate-guitar.com" target="_blank" class="group text-[10px] font-bold text-[#c5a059] hover:text-white transition-all tracking-widest uppercase flex items-center justify-between">
-                            Chords & Tabs 
-                            <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                            Chords & Tabs <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
                         </a>
                         <a href="https://www.justinguitar.com" target="_blank" class="group text-[10px] font-bold text-[#c5a059] hover:text-white transition-all tracking-widest uppercase flex items-center justify-between">
-                            Free Lessons 
-                            <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                            Free Lessons <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
                         </a>
                         <div class="pt-4 border-t border-white/5">
                             <p class="text-[10px] text-slate-500 leading-relaxed italic">
-                                Tuning: E A D G B E<br>
-                                1 Fret = 1 Semitone
+                                Tuning: E A D G B E<br>1 Fret = 1 Semitone
                             </p>
                         </div>
                     </div>
@@ -318,31 +326,29 @@
 
     <script>
         const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-        const TUNING = [4, 11, 7, 2, 9, 4]; 
+        const TUNING = [4, 11, 7, 2, 9, 4]; // E B G D A E from top to bottom visual
         
         const INTERVAL_LABELS = {
             0: 'R', 1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7'
         };
 
         const STRUCTURES = {
-            maj: [0, 4, 7],
-            min: [0, 3, 7],
-            dim: [0, 3, 6],
-            aug: [0, 4, 8],
-            maj7: [0, 4, 7, 11],
-            dom7: [0, 4, 7, 10],
-            min7: [0, 3, 7, 10],
-            m7b5: [0, 3, 6, 10],
-            major: [0, 2, 4, 5, 7, 9, 11],
-            dorian: [0, 2, 3, 5, 7, 9, 10],
-            phrygian: [0, 1, 3, 5, 7, 8, 10],
-            lydian: [0, 2, 4, 6, 7, 9, 11],
-            mixolydian: [0, 2, 4, 5, 7, 9, 10],
-            minor: [0, 2, 3, 5, 7, 8, 10],
-            locrian: [0, 1, 3, 5, 6, 8, 10],
-            pentatonicMajor: [0, 2, 4, 7, 9],
-            pentatonicMinor: [0, 3, 5, 7, 10],
-            blues: [0, 3, 5, 6, 7, 10]
+            maj: [0, 4, 7], min: [0, 3, 7], dim: [0, 3, 6], aug: [0, 4, 8],
+            maj7: [0, 4, 7, 11], dom7: [0, 4, 7, 10], min7: [0, 3, 7, 10], m7b5: [0, 3, 6, 10],
+            major: [0, 2, 4, 5, 7, 9, 11], dorian: [0, 2, 3, 5, 7, 9, 10], phrygian: [0, 1, 3, 5, 7, 8, 10],
+            lydian: [0, 2, 4, 6, 7, 9, 11], mixolydian: [0, 2, 4, 5, 7, 9, 10], minor: [0, 2, 3, 5, 7, 8, 10],
+            locrian: [0, 1, 3, 5, 6, 8, 10], pentatonicMajor: [0, 2, 4, 7, 9],
+            pentatonicMinor: [0, 3, 5, 7, 10], blues: [0, 3, 5, 6, 7, 10]
+        };
+
+        const TRIAD_ARPEGGIO_KEYS = ['maj', 'min', 'dim', 'aug', 'maj7', 'dom7', 'min7', 'm7b5'];
+
+        const STRING_GROUPS = {
+            all: [0, 1, 2, 3, 4, 5],
+            top: [5, 4, 3],
+            middle: [4, 3, 2],
+            inner: [3, 2, 1],
+            bottom: [2, 1, 0]
         };
 
         const NUM_FRETS = 14;
@@ -355,8 +361,14 @@
             const structureType = document.getElementById('scaleSelect').value;
             const showIntervals = document.getElementById('labelToggle').checked;
             const isOctaveOnly = document.getElementById('octaveToggle').checked;
+            const stringGroup = document.getElementById('stringGroupSelect').value;
             
+            const isTriadOrArp = TRIAD_ARPEGGIO_KEYS.includes(structureType);
+
+            // Update Legends
             document.getElementById('blueNoteLegend').style.display = structureType === 'blues' ? 'flex' : 'none';
+            document.getElementById('legendIntervals').style.display = isTriadOrArp ? 'contents' : 'none';
+            document.getElementById('legendScale').style.display = !isTriadOrArp ? 'flex' : 'none';
 
             const rootIndex = NOTES.indexOf(key);
             let displayNotes = isOctaveOnly ? [rootIndex] : STRUCTURES[structureType].map(i => (rootIndex + i) % 12);
@@ -395,14 +407,18 @@
                 }
             });
 
+            const activeStrings = STRING_GROUPS[stringGroup];
+
             for(let s = 0; s < 6; s++) {
                 const y = START_Y + (s * STRING_SPACE);
                 const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
                 line.setAttribute("x1", 0); line.setAttribute("y1", y);
                 line.setAttribute("x2", NUM_FRETS * FRET_WIDTH); line.setAttribute("y2", y);
-                line.setAttribute("stroke", "#2a2a2a"); 
+                line.setAttribute("stroke", activeStrings.includes(s) ? "#444" : "#222"); 
                 line.setAttribute("stroke-width", 1 + (s * 0.4));
                 stringsG.appendChild(line);
+
+                if (!activeStrings.includes(s)) continue;
 
                 const openNoteIdx = TUNING[s];
                 for(let f = 0; f <= NUM_FRETS; f++) {
@@ -410,10 +426,20 @@
                     if (displayNotes.includes(noteIdx)) {
                         const relNoteIdx = (noteIdx - rootIndex + 12) % 12;
                         const isRoot = noteIdx === rootIndex;
+                        const is3rd = (relNoteIdx === 3 || relNoteIdx === 4);
+                        const is5th = (relNoteIdx === 7 || relNoteIdx === 8 || relNoteIdx === 6);
                         const isBlueNote = structureType === 'blues' && relNoteIdx === 6;
                         
-                        let color = isRoot ? "#c5a059" : "#e5e5e5";
-                        if (isBlueNote) color = "#38bdf8";
+                        let color = "#e5e5e5"; // Default Scale Note (Light)
+                        if (isRoot) {
+                            color = "#c5a059";
+                        } else if (isBlueNote) {
+                            color = "#38bdf8";
+                        } else if (isTriadOrArp) {
+                            // Only apply Slate coloring if in Triad/Arp mode
+                            if (is3rd) color = "#94a3b8";
+                            else if (is5th) color = "#64748b";
+                        }
                         
                         const label = showIntervals ? INTERVAL_LABELS[relNoteIdx] : NOTES[noteIdx];
                         const x = f === 0 ? -20 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
@@ -452,14 +478,10 @@
         }
 
         const container = document.getElementById('fretContainer');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
+        let isDown = false; let startX; let scrollLeft;
 
         container.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - container.offsetLeft;
-            scrollLeft = container.scrollLeft;
+            isDown = true; startX = e.pageX - container.offsetLeft; scrollLeft = container.scrollLeft;
         });
         container.addEventListener('mouseleave', () => isDown = false);
         container.addEventListener('mouseup', () => isDown = false);
