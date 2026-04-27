@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codguy's Guitar World | Mastery</title>
+    <title>Codeguy's Guitar World | Mastery</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -38,7 +38,6 @@
             min-width: fit-content;
         }
 
-        /* Segmented Control for Mode Toggle */
         .mode-toggle {
             display: flex;
             background: #0a0a0a;
@@ -80,10 +79,10 @@
         .fretboard-wrapper {
             flex-grow: 1;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: flex-start;
             overflow-x: auto;
-            padding: 40px;
+            padding: 0px 10px 10px 0px; 
             background: #0a0a0a;
         }
         .fretboard-wrapper::-webkit-scrollbar { height: 6px; }
@@ -150,54 +149,42 @@
 
         @media (max-width: 768px) {
             body { overflow-y: auto; height: auto; }
-            .fretboard-wrapper { min-height: 400px; padding: 20px; }
+            .fretboard-wrapper { min-height: 350px; padding: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Compact Header -->
     <header class="w-full px-6 py-4 flex flex-col md:flex-row items-center justify-between border-b border-white/5 bg-[#0a0a0a]">
         <h1 class="text-2xl serif-font font-bold italic tracking-tight mb-4 md:mb-0">
-            Codguy's <span class="gold-gradient">Guitar</span> World
+            Codeguy's <span class="gold-gradient">Guitar</span> World
         </h1>
-        
-        <!-- Quick Key Selector -->
         <div id="keyPad" class="flex flex-wrap justify-center gap-1"></div>
     </header>
 
     <div class="flex flex-col md:flex-row flex-grow overflow-hidden">
         
-        <!-- Controls Sidebar -->
-        <aside class="w-full md:w-72 p-4 bg-[#141414] border-r border-white/5 overflow-y-auto space-y-6">
-            
+        <aside class="w-full md:w-72 p-4 bg-[#141414] border-r border-white/5 overflow-y-auto space-y-6 z-10">
             <div class="space-y-4">
                 <h3 class="text-[10px] font-bold uppercase tracking-widest text-gold-gradient">Structure Mode</h3>
-                
-                <!-- Category Toggle -->
                 <div class="mode-toggle">
                     <button id="modeScale" class="mode-btn active" onclick="switchMode('scale')">Scale</button>
                     <button id="modeTriad" class="mode-btn" onclick="switchMode('triad')">Triad</button>
                     <button id="modeArp" class="mode-btn" onclick="switchMode('arpeggio')">Arp</button>
                 </div>
-
-                <!-- Dynamic Selectors -->
                 <div id="selectorContainer" class="space-y-1">
                     <label id="selectLabel" class="text-[9px] text-slate-500 uppercase font-bold">Select Scale</label>
-                    
                     <select id="scaleSelect" class="mode-select" onchange="renderFretboard()">
                         <option value="pentatonicMinor" selected>Minor Pentatonic</option>
                         <option value="major">Major Scale</option>
                         <option value="minor">Natural Minor</option>
                         <option value="blues">Blues Scale</option>
                     </select>
-
                     <select id="triadSelect" class="mode-select hidden" onchange="renderFretboard()">
                         <option value="maj">Major Triad</option>
                         <option value="min">Minor Triad</option>
                         <option value="dim">Diminished Triad</option>
                     </select>
-
                     <select id="arpeggioSelect" class="mode-select hidden" onchange="renderFretboard()">
                         <option value="maj7">Major 7th</option>
                         <option value="min7">Minor 7th</option>
@@ -208,19 +195,16 @@
 
             <div class="space-y-4 pt-4 border-t border-white/5">
                 <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-400">View Controls</h3>
-                
-                <!-- String Group -->
                 <div class="space-y-1">
-                    <label class="text-[9px] text-slate-500 uppercase font-bold">String Group</label>
+                    <label class="text-[9px] text-slate-500 uppercase font-bold">String Filter (Hide Notes)</label>
                     <select id="stringGroupSelect" onchange="renderFretboard()">
-                        <option value="all">Full Fretboard</option>
+                        <option value="all">Show All</option>
                         <option value="top">Top (E A D)</option>
                         <option value="middle">Middle (A D G)</option>
+                        <option value="inner">Inner (D G B)</option>
                         <option value="bottom">Bottom (G B E)</option>
                     </select>
                 </div>
-
-                <!-- Labels & Isolation Combined Row -->
                 <div class="flex gap-2">
                     <div class="flex-1 space-y-1">
                         <label class="text-[9px] text-slate-500 uppercase font-bold">Labels</label>
@@ -246,10 +230,9 @@
             </div>
         </aside>
 
-        <!-- Visualization Area -->
         <main class="fretboard-wrapper">
-            <div class="luxury-card p-6 rounded-sm">
-                <svg id="fretboardSvg" height="200" class="block">
+            <div class="luxury-card p-2 rounded-sm mt-6"> 
+                <svg id="fretboardSvg" height="190" class="block">
                     <rect id="fretboardBg" x="0" y="20" height="150" fill="#121212" rx="2"/>
                     <g id="fretsG"></g>
                     <g id="markersG"></g>
@@ -263,24 +246,26 @@
 
     <script>
         const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-        const TUNING = [4, 11, 7, 2, 9, 4]; 
+        // Tuning reversed for standard top-to-bottom visual order (Low E at bottom)
+        const TUNING = [4, 11, 7, 2, 9, 4]; // E2 B3 G3 D3 A2 E2
         const INTERVAL_LABELS = { 0: 'R', 1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7' };
         
         const STRUCTURES = {
-            maj: [0, 4, 7], 
-            min: [0, 3, 7],
-            dim: [0, 3, 6],
-            major: [0, 2, 4, 5, 7, 9, 11],
-            minor: [0, 2, 3, 5, 7, 8, 10],
-            pentatonicMinor: [0, 3, 5, 7, 10], 
-            blues: [0, 3, 5, 6, 7, 10],
-            maj7: [0, 4, 7, 11],
-            min7: [0, 3, 7, 10],
-            dom7: [0, 4, 7, 10],
+            maj: [0, 4, 7], min: [0, 3, 7], dim: [0, 3, 6],
+            major: [0, 2, 4, 5, 7, 9, 11], minor: [0, 2, 3, 5, 7, 8, 10],
+            pentatonicMinor: [0, 3, 5, 7, 10], blues: [0, 3, 5, 6, 7, 10],
+            maj7: [0, 4, 7, 11], min7: [0, 3, 7, 10], dom7: [0, 4, 7, 10],
             none: [0]
         };
 
-        const STRING_GROUPS = { all: [0, 1, 2, 3, 4, 5], top: [5, 4, 3], middle: [4, 3, 2], bottom: [2, 1, 0] };
+        // Note: 0 is High E, 5 is Low E
+        const STRING_GROUPS = { 
+            all: [0, 1, 2, 3, 4, 5], 
+            top: [3, 4, 5], 
+            middle: [2, 3, 4], 
+            inner: [1, 2, 3], 
+            bottom: [0, 1, 2] 
+        };
         
         const FRET_WIDTH = 85;
         const STRING_SPACE = 25;
@@ -308,21 +293,11 @@
 
         function switchMode(mode) {
             currentActiveMode = mode;
-            
-            // UI Button states
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            if(mode === 'scale') document.getElementById('modeScale').classList.add('active');
-            if(mode === 'triad') document.getElementById('modeTriad').classList.add('active');
-            if(mode === 'arpeggio') document.getElementById('modeArp').classList.add('active');
-
-            // Toggle select visibility
+            document.getElementById('mode' + mode.charAt(0).toUpperCase() + mode.slice(1)).classList.add('active');
             document.querySelectorAll('.mode-select').forEach(sel => sel.classList.add('hidden'));
-            const activeSel = document.getElementById(mode + 'Select');
-            activeSel.classList.remove('hidden');
-            
-            // Update Label
+            document.getElementById(mode + 'Select').classList.remove('hidden');
             document.getElementById('selectLabel').innerText = 'Select ' + mode.charAt(0).toUpperCase() + mode.slice(1);
-
             renderFretboard();
         }
 
@@ -334,8 +309,11 @@
             const structureKey = getActiveStructure();
             const showIntervals = document.getElementById('labelToggle').checked;
             const isOctaveOnly = document.getElementById('octaveToggle').checked;
-            const stringGroup = document.getElementById('stringGroupSelect').value;
+            const stringGroupName = document.getElementById('stringGroupSelect').value;
             const rootIndex = NOTES.indexOf(currentKey);
+            
+            // Strings to show NOTES on
+            const activeStrings = STRING_GROUPS[stringGroupName];
             
             const activeNoteValues = isOctaveOnly 
                 ? [rootIndex] 
@@ -347,11 +325,11 @@
             const svg = document.getElementById('fretboardSvg');
             const bg = document.getElementById('fretboardBg');
             
-            svg.setAttribute('width', totalWidth + 100);
+            svg.setAttribute('width', totalWidth + 10); 
             bg.setAttribute('width', totalWidth);
-            svg.setAttribute('viewBox', `-50 0 ${totalWidth + 100} 200`);
+            svg.setAttribute('viewBox', `-3 0 ${totalWidth + 10} 200`);
 
-            // Markers
+            // Markers (Dots on neck)
             const markers = [3, 5, 7, 9, 12, 15];
             markers.forEach(m => {
                 if (m > NUM_FRETS) return;
@@ -360,8 +338,6 @@
                 dot.setAttribute("cx", x); dot.setAttribute("cy", 185); dot.setAttribute("r", "3");
                 dot.setAttribute("fill", "#444");
                 document.getElementById('markersG').appendChild(dot);
-                
-                // Double dots for 12th
                 if (m === 12) {
                      const dot2 = dot.cloneNode();
                      dot2.setAttribute("cy", 193);
@@ -387,16 +363,17 @@
                 document.getElementById('labelsG').appendChild(num);
             }
 
-            const activeStrings = STRING_GROUPS[stringGroup];
+            // Strings & Notes
             for(let s = 0; s < 6; s++) {
                 const y = START_Y + (s * STRING_SPACE);
                 const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
                 line.setAttribute("x1", 0); line.setAttribute("y1", y);
                 line.setAttribute("x2", totalWidth); line.setAttribute("y2", y);
-                line.setAttribute("stroke", activeStrings.includes(s) ? "#444" : "#1a1a1a");
+                line.setAttribute("stroke", "#444"); // All strings always visible
                 line.setAttribute("stroke-width", 1.5 + (s * 0.4));
                 document.getElementById('stringsG').appendChild(line);
 
+                // ONLY DRAW NOTES if string is in the active group
                 if (!activeStrings.includes(s)) continue;
 
                 const openNoteIdx = TUNING[s];
@@ -406,7 +383,7 @@
                         const relIdx = (noteIdx - rootIndex + 12) % 12;
                         const isRoot = noteIdx === rootIndex;
                         const label = showIntervals ? INTERVAL_LABELS[relIdx] : NOTES[noteIdx];
-                        const x = f === 0 ? -25 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
+                        const x = f === 0 ? -15 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
                         
                         let color = "#e5e5e5"; 
                         if (isRoot) color = "#c5a059"; 
@@ -416,7 +393,6 @@
                         } else if (structureKey === 'blues' && relIdx === 6) {
                             color = "#38bdf8"; 
                         }
-
                         drawNote(x, y, label, isRoot, color);
                     }
                 }
@@ -433,14 +409,12 @@
                 c.setAttribute("stroke", "#000");
                 c.setAttribute("stroke-width", "1");
             }
-            
             const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
             t.setAttribute("x", x); t.setAttribute("y", y + 3.5);
             t.setAttribute("text-anchor", "middle");
             t.setAttribute("fill", "#000");
             t.setAttribute("style", "font-size: 9px; font-weight: 900; pointer-events: none;");
             t.textContent = label;
-
             g.appendChild(c); g.appendChild(t);
             document.getElementById('notesG').appendChild(g);
         }
@@ -452,4 +426,3 @@
     </script>
 </body>
 </html>
-
