@@ -5,34 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Codguy's Guitar World | Mastery</title>
     
-    <!-- PWA / Mobile Home Screen Meta Tags -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="GuitarWorld">
-    <link rel="apple-touch-icon" href="https://img.icons8.com/ios-filled/512/c5a059/guitar.png">
-    <link rel="icon" type="image/png" href="https://img.icons8.com/ios-filled/100/c5a059/guitar.png">
-    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #c5a059;
-            --gold-light: #e2c275;
             --obsidian: #0f0f0f;
-            --charcoal: #1a1a1a;
-            --blue-note: #38bdf8;
-            --triad-3rd: #94a3b8; /* Slate */
-            --triad-5th: #64748b; /* Darker Slate */
+            --platinum: #e5e5e5;
         }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--obsidian);
-            color: #e5e5e5;
-            overflow-x: hidden;
+            color: var(--platinum);
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            overflow: hidden;
         }
         .serif-font { font-family: 'Playfair Display', serif; }
         
@@ -45,47 +34,86 @@
         .luxury-card {
             background: linear-gradient(145deg, #1e1e1e, #141414);
             border: 1px solid rgba(197, 160, 89, 0.2);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            transition: border-color 0.3s ease;
-            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            min-width: fit-content;
         }
-        .luxury-card:hover { border-color: rgba(197, 160, 89, 0.5); }
 
-        .fretboard-container {
-            width: 100%;
+        /* Segmented Control for Mode Toggle */
+        .mode-toggle {
+            display: flex;
+            background: #0a0a0a;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            padding: 2px;
+            border-radius: 4px;
+        }
+        .mode-btn {
+            flex: 1;
+            padding: 6px 4px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mode-btn.active {
+            background: var(--gold);
+            color: #000;
+            border-radius: 2px;
+        }
+
+        .key-btn {
+            background: transparent;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            color: #888;
+            transition: all 0.2s ease;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .key-btn.active {
+            background: var(--gold);
+            color: black;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.3);
+        }
+
+        .fretboard-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
             overflow-x: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--gold) transparent;
-            padding-bottom: 20px;
-            display: block;
-            cursor: grab;
-            -webkit-overflow-scrolling: touch;
+            padding: 40px;
+            background: #0a0a0a;
         }
-        .fretboard-container:active { cursor: grabbing; }
-
-        .fretboard-container::-webkit-scrollbar { height: 6px; }
-        .fretboard-container::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
-        .fretboard-container::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        .fretboard-wrapper::-webkit-scrollbar { height: 6px; }
+        .fretboard-wrapper::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        .fretboard-wrapper::-webkit-scrollbar-track { background: #111; }
         
-        .fret-num { font-size: 10px; fill: #666; font-weight: 600; letter-spacing: 1px; }
+        .fret-num { font-size: 10px; fill: #666; font-weight: 800; }
         
         select {
             background: #111;
             border: 1px solid rgba(197, 160, 89, 0.3);
             color: white;
-            padding: 10px;
+            padding: 8px;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: 12px;
             outline: none;
             width: 100%;
+            cursor: pointer;
             appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c5a059'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 14px;
         }
 
         .switch {
             position: relative;
             display: inline-block;
             width: 100%;
-            height: 42px;
+            height: 32px;
         }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider {
@@ -93,407 +121,335 @@
             cursor: pointer;
             top: 0; left: 0; right: 0; bottom: 0;
             background-color: #111;
-            transition: .4s;
-            border: 1px solid rgba(197, 160, 89, 0.3);
+            transition: .3s;
+            border: 1px solid rgba(197, 160, 89, 0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 15px;
-            font-size: 9px;
+            padding: 0 8px;
+            font-size: 8px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
+            border-radius: 4px;
         }
         .slider:before {
             position: absolute;
             content: "";
-            height: 34px;
-            width: calc(50% - 8px);
-            left: 4px;
+            height: 24px;
+            width: calc(50% - 6px);
+            left: 3px;
             bottom: 3px;
-            background: linear-gradient(135deg, #c5a059, #8b6e37);
-            transition: .4s;
-            z-index: 0;
+            background: var(--gold);
+            transition: .3s;
+            border-radius: 2px;
         }
-        input:checked + .slider:before { transform: translateX(calc(100% + 8px)); }
-        .slider span { z-index: 1; transition: color 0.4s; }
+        input:checked + .slider:before { transform: translateX(calc(100% + 6px)); }
+        .slider span { z-index: 1; transition: color 0.3s; }
         input:not(:checked) + .slider .label-off { color: #000; }
         input:checked + .slider .label-on { color: #000; }
 
-        .theory-table th { color: var(--gold); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px; border-bottom: 1px solid rgba(197, 160, 89, 0.2); }
-        .theory-table td { font-size: 11px; padding: 8px; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .blue-note-highlight { color: var(--blue-note) !important; font-weight: bold; }
+        @media (max-width: 768px) {
+            body { overflow-y: auto; height: auto; }
+            .fretboard-wrapper { min-height: 400px; padding: 20px; }
+        }
     </style>
 </head>
-<body class="pb-28">
+<body>
 
-    <header class="w-full max-w-6xl px-6 py-12 md:py-20 relative text-center mx-auto">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] h-[300px] bg-[#c5a059]/10 blur-[150px] rounded-full"></div>
-        <div class="inline-block px-4 py-1 mb-6 text-[9px] font-bold tracking-[0.4em] border border-[#c5a059]/40 text-[#c5a059] rounded-sm uppercase">CURATED MASTERY</div>
-        
-        <h1 class="text-4xl sm:text-5xl md:text-7xl serif-font font-bold mb-4 italic tracking-tight leading-[1.1] md:leading-tight">
-            <span class="block sm:inline">Codguy's</span> 
-            <span class="gold-gradient flex items-center justify-center gap-2 sm:inline-flex">
-                <i class="fa-solid fa-guitar text-2xl md:text-4xl opacity-50 text-[#c5a059]"></i>
-                Guitar
-            </span> 
-            World
+    <!-- Compact Header -->
+    <header class="w-full px-6 py-4 flex flex-col md:flex-row items-center justify-between border-b border-white/5 bg-[#0a0a0a]">
+        <h1 class="text-2xl serif-font font-bold italic tracking-tight mb-4 md:mb-0">
+            Codguy's <span class="gold-gradient">Guitar</span> World
         </h1>
-        <p class="text-slate-500 font-light text-xs md:text-sm tracking-[0.2em] uppercase px-4">Bespoke Theory & Fretboard Visualization</p>
+        
+        <!-- Quick Key Selector -->
+        <div id="keyPad" class="flex flex-wrap justify-center gap-1"></div>
     </header>
 
-    <main class="w-full max-w-6xl mx-auto px-6 flex flex-col items-center">
+    <div class="flex flex-col md:flex-row flex-grow overflow-hidden">
         
-        <div class="luxury-card rounded-sm p-6 sm:p-8 mb-12">
-            <div class="flex flex-col md:flex-row items-center justify-between mb-10 border-b border-[#c5a059]/20 pb-6 gap-4">
-                <h2 class="text-2xl serif-font italic text-[#c5a059]">Fretboard Explorer</h2>
-                <div class="flex gap-4 text-[10px] font-bold tracking-widest text-slate-500">
-                    <span>ANALYZE</span> / <span>VISUALIZE</span> / <span>PRACTICE</span>
+        <!-- Controls Sidebar -->
+        <aside class="w-full md:w-72 p-4 bg-[#141414] border-r border-white/5 overflow-y-auto space-y-6">
+            
+            <div class="space-y-4">
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-gold-gradient">Structure Mode</h3>
+                
+                <!-- Category Toggle -->
+                <div class="mode-toggle">
+                    <button id="modeScale" class="mode-btn active" onclick="switchMode('scale')">Scale</button>
+                    <button id="modeTriad" class="mode-btn" onclick="switchMode('triad')">Triad</button>
+                    <button id="modeArp" class="mode-btn" onclick="switchMode('arpeggio')">Arp</button>
+                </div>
+
+                <!-- Dynamic Selectors -->
+                <div id="selectorContainer" class="space-y-1">
+                    <label id="selectLabel" class="text-[9px] text-slate-500 uppercase font-bold">Select Scale</label>
+                    
+                    <select id="scaleSelect" class="mode-select" onchange="renderFretboard()">
+                        <option value="pentatonicMinor" selected>Minor Pentatonic</option>
+                        <option value="major">Major Scale</option>
+                        <option value="minor">Natural Minor</option>
+                        <option value="blues">Blues Scale</option>
+                    </select>
+
+                    <select id="triadSelect" class="mode-select hidden" onchange="renderFretboard()">
+                        <option value="maj">Major Triad</option>
+                        <option value="min">Minor Triad</option>
+                        <option value="dim">Diminished Triad</option>
+                    </select>
+
+                    <select id="arpeggioSelect" class="mode-select hidden" onchange="renderFretboard()">
+                        <option value="maj7">Major 7th</option>
+                        <option value="min7">Minor 7th</option>
+                        <option value="dom7">Dominant 7th</option>
+                    </select>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-10 w-full">
-                <div class="space-y-2">
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Root Tone</label>
-                    <select id="keySelect" onchange="renderFretboard()">
-                        <option value="C">C Natural</option>
-                        <option value="C#">C# / Db</option>
-                        <option value="D">D Natural</option>
-                        <option value="D#">D# / Eb</option>
-                        <option value="E" selected>E Natural</option>
-                        <option value="F">F Natural</option>
-                        <option value="F#">F# / Gb</option>
-                        <option value="G">G Natural</option>
-                        <option value="G#">G# / Ab</option>
-                        <option value="A">A Natural</option>
-                        <option value="A#">A# / Bb</option>
-                        <option value="B">B Natural</option>
-                    </select>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Structure</label>
-                    <select id="scaleSelect" onchange="renderFretboard()">
-                        <optgroup label="Triads (High Contrast Mode)">
-                            <option value="maj">Major Triad (1 3 5)</option>
-                            <option value="min">Minor Triad (1 b3 5)</option>
-                            <option value="dim">Diminished Triad (1 b3 b5)</option>
-                            <option value="aug">Augmented Triad (1 3 #5)</option>
-                        </optgroup>
-                        <optgroup label="7th Arpeggios (High Contrast Mode)">
-                            <option value="maj7">Major 7th (1 3 5 7)</option>
-                            <option value="dom7">Dominant 7th (1 3 5 b7)</option>
-                            <option value="min7">Minor 7th (1 b3 5 b7)</option>
-                            <option value="m7b5">Minor 7b5 (1 b3 b5 b7)</option>
-                        </optgroup>
-                        <optgroup label="Diatonic Modes">
-                            <option value="major">Ionian (Major)</option>
-                            <option value="dorian">Dorian</option>
-                            <option value="phrygian">Phrygian</option>
-                            <option value="lydian">Lydian</option>
-                            <option value="mixolydian">Mixolydian</option>
-                            <option value="minor">Aeolian (Minor)</option>
-                            <option value="locrian">Locrian</option>
-                        </optgroup>
-                        <optgroup label="Pentatonic & Blues">
-                            <option value="pentatonicMajor">Pentatonic Major</option>
-                            <option value="pentatonicMinor" selected>Pentatonic Minor</option>
-                            <option value="blues">Blues Scale</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">String Set</label>
+            <div class="space-y-4 pt-4 border-t border-white/5">
+                <h3 class="text-[10px] font-bold uppercase tracking-widest text-slate-400">View Controls</h3>
+                
+                <!-- String Group -->
+                <div class="space-y-1">
+                    <label class="text-[9px] text-slate-500 uppercase font-bold">String Group</label>
                     <select id="stringGroupSelect" onchange="renderFretboard()">
                         <option value="all">Full Fretboard</option>
-                        <option value="top">Top Strings (E A D)</option>
-                        <option value="middle">Middle Strings (A D G)</option>
-                        <option value="inner">Inner Strings (D G B)</option>
-                        <option value="bottom">Bottom Strings (G B E)</option>
+                        <option value="top">Top (E A D)</option>
+                        <option value="middle">Middle (A D G)</option>
+                        <option value="bottom">Bottom (G B E)</option>
                     </select>
                 </div>
-                <div class="space-y-2">
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Labeling</label>
-                    <label class="switch">
-                        <input type="checkbox" id="labelToggle" onchange="renderFretboard()">
-                        <span class="slider">
-                            <span class="label-off">Note Name</span>
-                            <span class="label-on">Interval</span>
-                        </span>
-                    </label>
-                </div>
-                <div class="space-y-2">
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Focus Area</label>
-                    <label class="switch">
-                        <input type="checkbox" id="octaveToggle" onchange="renderFretboard()">
-                        <span class="slider">
-                            <span class="label-off">Full Neck</span>
-                            <span class="label-on">Octave Focus</span>
-                        </span>
-                    </label>
+
+                <!-- Labels & Isolation Combined Row -->
+                <div class="flex gap-2">
+                    <div class="flex-1 space-y-1">
+                        <label class="text-[9px] text-slate-500 uppercase font-bold">Labels</label>
+                        <label class="switch">
+                            <input type="checkbox" id="labelToggle" onchange="renderFretboard()">
+                            <span class="slider">
+                                <span class="label-off">Note</span>
+                                <span class="label-on">Intv</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="flex-1 space-y-1">
+                        <label class="text-[9px] text-slate-500 uppercase font-bold">Isolation</label>
+                        <label class="switch">
+                            <input type="checkbox" id="octaveToggle" onchange="renderFretboard()">
+                            <span class="slider">
+                                <span class="label-off">Full</span>
+                                <span class="label-on">Root</span>
+                            </span>
+                        </label>
+                    </div>
                 </div>
             </div>
+        </aside>
 
-            <div class="fretboard-container" id="fretContainer">
-                <svg id="fretboardSvg" width="1050" height="230" viewBox="-40 0 1050 230" class="mx-auto block">
-                    <rect x="0" y="20" width="1000" height="150" fill="#121212" rx="2"/>
-                    <g id="stringsG"></g>
+        <!-- Visualization Area -->
+        <main class="fretboard-wrapper">
+            <div class="luxury-card p-6 rounded-sm">
+                <svg id="fretboardSvg" height="200" class="block">
+                    <rect id="fretboardBg" x="0" y="20" height="150" fill="#121212" rx="2"/>
                     <g id="fretsG"></g>
                     <g id="markersG"></g>
+                    <g id="stringsG"></g>
                     <g id="notesG"></g>
                     <g id="labelsG"></g>
                 </svg>
             </div>
-
-            <div class="mt-8 flex flex-wrap justify-center gap-6 md:gap-10">
-                <div class="flex items-center gap-3">
-                    <div class="w-2 h-2 rounded-full bg-[#c5a059] shadow-[0_0_10px_#c5a059]"></div>
-                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Tonic</span>
-                </div>
-                <div id="legendIntervals" class="contents">
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-2 rounded-full bg-[#94a3b8] shadow-[0_0_10px_#94a3b8]"></div>
-                        <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">3rd Degree</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <div class="w-2 h-2 rounded-full bg-[#64748b] shadow-[0_0_10px_#64748b]"></div>
-                        <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">5th Degree</span>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3" id="blueNoteLegend" style="display: none;">
-                    <div class="w-2 h-2 rounded-full bg-[#38bdf8] shadow-[0_0_10px_#38bdf8]"></div>
-                    <span class="text-[10px] font-semibold tracking-widest text-[#38bdf8] uppercase">The Blue Note</span>
-                </div>
-                <div id="legendScale" class="flex items-center gap-3" style="display: none;">
-                    <div class="w-2 h-2 rounded-full bg-slate-100"></div>
-                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Other Degrees</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12 w-full">
-            <div class="lg:col-span-2 luxury-card p-8">
-                <h3 class="serif-font text-2xl italic text-[#c5a059] mb-6">Interval Theory Notes</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                    <table class="theory-table w-full text-left">
-                        <thead>
-                            <tr><th>Name</th><th>Distance</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>Root (1)</td><td>0 Semitones</td></tr>
-                            <tr><td>Minor Second (b2)</td><td>1 Semitone</td></tr>
-                            <tr><td>Major Second (2)</td><td>2 Semitones</td></tr>
-                            <tr><td>Minor Third (b3)</td><td>3 Semitones</td></tr>
-                            <tr><td>Major Third (3)</td><td>4 Semitones</td></tr>
-                            <tr><td>Perfect Fourth (4)</td><td>5 Semitones</td></tr>
-                        </tbody>
-                    </table>
-                    <table class="theory-table w-full text-left">
-                        <thead>
-                            <tr><th>Name</th><th>Distance</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr class="blue-note-highlight"><td>The Blue Note (b5)</td><td>6 Semitones</td></tr>
-                            <tr><td>Perfect Fifth (5)</td><td>7 Semitones</td></tr>
-                            <tr><td>Minor Sixth (b6)</td><td>8 Semitones</td></tr>
-                            <tr><td>Major Sixth (6)</td><td>9 Semitones</td></tr>
-                            <tr><td>Minor Seventh (b7)</td><td>10 Semitones</td></tr>
-                            <tr><td>Major Seventh (7)</td><td>11 Semitones</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="space-y-6 w-full">
-                <div class="luxury-card p-6 space-y-4">
-                    <h3 class="serif-font text-lg italic border-b border-[#c5a059]/20 pb-2">Mastery Resources</h3>
-                    <div class="flex flex-col gap-3 pt-2">
-                        <a href="https://www.ultimate-guitar.com" target="_blank" class="group text-[10px] font-bold text-[#c5a059] hover:text-white transition-all tracking-widest uppercase flex items-center justify-between">
-                            Chords & Tabs <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                        </a>
-                        <a href="https://www.justinguitar.com" target="_blank" class="group text-[10px] font-bold text-[#c5a059] hover:text-white transition-all tracking-widest uppercase flex items-center justify-between">
-                            Free Lessons <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                        </a>
-                        <div class="pt-4 border-t border-white/5">
-                            <p class="text-[10px] text-slate-500 leading-relaxed italic">
-                                Tuning: E A D G B E<br>1 Fret = 1 Semitone
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
+        </main>
+    </div>
 
     <script>
         const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-        const TUNING = [4, 11, 7, 2, 9, 4]; // E B G D A E from top to bottom visual
+        const TUNING = [4, 11, 7, 2, 9, 4]; 
+        const INTERVAL_LABELS = { 0: 'R', 1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7' };
         
-        const INTERVAL_LABELS = {
-            0: 'R', 1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7'
-        };
-
         const STRUCTURES = {
-            maj: [0, 4, 7], min: [0, 3, 7], dim: [0, 3, 6], aug: [0, 4, 8],
-            maj7: [0, 4, 7, 11], dom7: [0, 4, 7, 10], min7: [0, 3, 7, 10], m7b5: [0, 3, 6, 10],
-            major: [0, 2, 4, 5, 7, 9, 11], dorian: [0, 2, 3, 5, 7, 9, 10], phrygian: [0, 1, 3, 5, 7, 8, 10],
-            lydian: [0, 2, 4, 6, 7, 9, 11], mixolydian: [0, 2, 4, 5, 7, 9, 10], minor: [0, 2, 3, 5, 7, 8, 10],
-            locrian: [0, 1, 3, 5, 6, 8, 10], pentatonicMajor: [0, 2, 4, 7, 9],
-            pentatonicMinor: [0, 3, 5, 7, 10], blues: [0, 3, 5, 6, 7, 10]
+            maj: [0, 4, 7], 
+            min: [0, 3, 7],
+            dim: [0, 3, 6],
+            major: [0, 2, 4, 5, 7, 9, 11],
+            minor: [0, 2, 3, 5, 7, 8, 10],
+            pentatonicMinor: [0, 3, 5, 7, 10], 
+            blues: [0, 3, 5, 6, 7, 10],
+            maj7: [0, 4, 7, 11],
+            min7: [0, 3, 7, 10],
+            dom7: [0, 4, 7, 10],
+            none: [0]
         };
 
-        const TRIAD_ARPEGGIO_KEYS = ['maj', 'min', 'dim', 'aug', 'maj7', 'dom7', 'min7', 'm7b5'];
-
-        const STRING_GROUPS = {
-            all: [0, 1, 2, 3, 4, 5],
-            top: [5, 4, 3],
-            middle: [4, 3, 2],
-            inner: [3, 2, 1],
-            bottom: [2, 1, 0]
-        };
-
-        const NUM_FRETS = 14;
-        const FRET_WIDTH = 65;
+        const STRING_GROUPS = { all: [0, 1, 2, 3, 4, 5], top: [5, 4, 3], middle: [4, 3, 2], bottom: [2, 1, 0] };
+        
+        const FRET_WIDTH = 85;
         const STRING_SPACE = 25;
-        const START_Y = 35;
+        const START_Y = 32;
+        const NUM_FRETS = 15;
+
+        let currentKey = 'E';
+        let currentActiveMode = 'scale';
+
+        function setupKeyPad() {
+            const pad = document.getElementById('keyPad');
+            NOTES.forEach(note => {
+                const btn = document.createElement('button');
+                btn.className = `key-btn px-3 py-1 rounded-sm ${note === currentKey ? 'active' : ''}`;
+                btn.textContent = note;
+                btn.onclick = () => {
+                    currentKey = note;
+                    document.querySelectorAll('.key-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderFretboard();
+                };
+                pad.appendChild(btn);
+            });
+        }
+
+        function switchMode(mode) {
+            currentActiveMode = mode;
+            
+            // UI Button states
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            if(mode === 'scale') document.getElementById('modeScale').classList.add('active');
+            if(mode === 'triad') document.getElementById('modeTriad').classList.add('active');
+            if(mode === 'arpeggio') document.getElementById('modeArp').classList.add('active');
+
+            // Toggle select visibility
+            document.querySelectorAll('.mode-select').forEach(sel => sel.classList.add('hidden'));
+            const activeSel = document.getElementById(mode + 'Select');
+            activeSel.classList.remove('hidden');
+            
+            // Update Label
+            document.getElementById('selectLabel').innerText = 'Select ' + mode.charAt(0).toUpperCase() + mode.slice(1);
+
+            renderFretboard();
+        }
+
+        function getActiveStructure() {
+            return document.getElementById(currentActiveMode + 'Select').value;
+        }
 
         function renderFretboard() {
-            const key = document.getElementById('keySelect').value;
-            const structureType = document.getElementById('scaleSelect').value;
+            const structureKey = getActiveStructure();
             const showIntervals = document.getElementById('labelToggle').checked;
             const isOctaveOnly = document.getElementById('octaveToggle').checked;
             const stringGroup = document.getElementById('stringGroupSelect').value;
+            const rootIndex = NOTES.indexOf(currentKey);
             
-            const isTriadOrArp = TRIAD_ARPEGGIO_KEYS.includes(structureType);
+            const activeNoteValues = isOctaveOnly 
+                ? [rootIndex] 
+                : (STRUCTURES[structureKey] || [0]).map(i => (rootIndex + i) % 12);
 
-            // Update Legends
-            document.getElementById('blueNoteLegend').style.display = structureType === 'blues' ? 'flex' : 'none';
-            document.getElementById('legendIntervals').style.display = isTriadOrArp ? 'contents' : 'none';
-            document.getElementById('legendScale').style.display = !isTriadOrArp ? 'flex' : 'none';
+            ['fretsG', 'stringsG', 'markersG', 'notesG', 'labelsG'].forEach(id => document.getElementById(id).innerHTML = '');
 
-            const rootIndex = NOTES.indexOf(key);
-            let displayNotes = isOctaveOnly ? [rootIndex] : STRUCTURES[structureType].map(i => (rootIndex + i) % 12);
+            const totalWidth = NUM_FRETS * FRET_WIDTH;
+            const svg = document.getElementById('fretboardSvg');
+            const bg = document.getElementById('fretboardBg');
+            
+            svg.setAttribute('width', totalWidth + 100);
+            bg.setAttribute('width', totalWidth);
+            svg.setAttribute('viewBox', `-50 0 ${totalWidth + 100} 200`);
 
-            const fretsG = document.getElementById('fretsG');
-            const stringsG = document.getElementById('stringsG');
-            const markersG = document.getElementById('markersG');
-            const notesG = document.getElementById('notesG');
-            const labelsG = document.getElementById('labelsG');
+            // Markers
+            const markers = [3, 5, 7, 9, 12, 15];
+            markers.forEach(m => {
+                if (m > NUM_FRETS) return;
+                const x = (m * FRET_WIDTH) - (FRET_WIDTH/2);
+                const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                dot.setAttribute("cx", x); dot.setAttribute("cy", 185); dot.setAttribute("r", "3");
+                dot.setAttribute("fill", "#444");
+                document.getElementById('markersG').appendChild(dot);
+                
+                // Double dots for 12th
+                if (m === 12) {
+                     const dot2 = dot.cloneNode();
+                     dot2.setAttribute("cy", 193);
+                     document.getElementById('markersG').appendChild(dot2);
+                }
+            });
 
-            [fretsG, stringsG, markersG, notesG, labelsG].forEach(g => g.innerHTML = '');
-
-            for(let i = 0; i <= NUM_FRETS; i++) {
+            // Frets
+            for (let i = 0; i <= NUM_FRETS; i++) {
                 const x = i * FRET_WIDTH;
                 const fret = document.createElementNS("http://www.w3.org/2000/svg", "line");
                 fret.setAttribute("x1", x); fret.setAttribute("y1", 20);
                 fret.setAttribute("x2", x); fret.setAttribute("y2", 170);
-                fret.setAttribute("stroke", i === 0 ? "#c5a059" : "#333");
-                fret.setAttribute("stroke-width", i === 0 ? "4" : "1");
-                fretsG.appendChild(fret);
+                fret.setAttribute("stroke", i === 0 ? "#c5a059" : "#2a2a2a");
+                fret.setAttribute("stroke-width", i === 0 ? "5" : "2");
+                document.getElementById('fretsG').appendChild(fret);
 
-                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                const labelX = i === 0 ? 0 : (x - FRET_WIDTH/2);
-                text.setAttribute("x", labelX); text.setAttribute("y", 205);
-                text.setAttribute("class", "fret-num"); text.setAttribute("text-anchor", "middle");
-                text.textContent = i === 0 ? "NUT" : i;
-                labelsG.appendChild(text);
+                const num = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                num.setAttribute("x", i === 0 ? 0 : x - FRET_WIDTH/2); num.setAttribute("y", 15);
+                num.setAttribute("class", "fret-num");
+                num.setAttribute("text-anchor", "middle");
+                num.textContent = i === 0 ? "NUT" : i;
+                document.getElementById('labelsG').appendChild(num);
             }
 
-            [3, 5, 7, 9, 12].forEach(f => {
-                const x = (f * FRET_WIDTH) - (FRET_WIDTH/2);
-                if (f === 12) {
-                    drawDot(x, 75, markersG); drawDot(x, 115, markersG);
-                } else {
-                    drawDot(x, 95, markersG);
-                }
-            });
-
             const activeStrings = STRING_GROUPS[stringGroup];
-
             for(let s = 0; s < 6; s++) {
                 const y = START_Y + (s * STRING_SPACE);
                 const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
                 line.setAttribute("x1", 0); line.setAttribute("y1", y);
-                line.setAttribute("x2", NUM_FRETS * FRET_WIDTH); line.setAttribute("y2", y);
-                line.setAttribute("stroke", activeStrings.includes(s) ? "#444" : "#222"); 
-                line.setAttribute("stroke-width", 1 + (s * 0.4));
-                stringsG.appendChild(line);
+                line.setAttribute("x2", totalWidth); line.setAttribute("y2", y);
+                line.setAttribute("stroke", activeStrings.includes(s) ? "#444" : "#1a1a1a");
+                line.setAttribute("stroke-width", 1.5 + (s * 0.4));
+                document.getElementById('stringsG').appendChild(line);
 
                 if (!activeStrings.includes(s)) continue;
 
                 const openNoteIdx = TUNING[s];
-                for(let f = 0; f <= NUM_FRETS; f++) {
+                for (let f = 0; f <= NUM_FRETS; f++) {
                     const noteIdx = (openNoteIdx + f) % 12;
-                    if (displayNotes.includes(noteIdx)) {
-                        const relNoteIdx = (noteIdx - rootIndex + 12) % 12;
+                    if (activeNoteValues.includes(noteIdx)) {
+                        const relIdx = (noteIdx - rootIndex + 12) % 12;
                         const isRoot = noteIdx === rootIndex;
-                        const is3rd = (relNoteIdx === 3 || relNoteIdx === 4);
-                        const is5th = (relNoteIdx === 7 || relNoteIdx === 8 || relNoteIdx === 6);
-                        const isBlueNote = structureType === 'blues' && relNoteIdx === 6;
+                        const label = showIntervals ? INTERVAL_LABELS[relIdx] : NOTES[noteIdx];
+                        const x = f === 0 ? -25 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
                         
-                        let color = "#e5e5e5"; // Default Scale Note (Light)
-                        if (isRoot) {
-                            color = "#c5a059";
-                        } else if (isBlueNote) {
-                            color = "#38bdf8";
-                        } else if (isTriadOrArp) {
-                            // Only apply Slate coloring if in Triad/Arp mode
-                            if (is3rd) color = "#94a3b8";
-                            else if (is5th) color = "#64748b";
+                        let color = "#e5e5e5"; 
+                        if (isRoot) color = "#c5a059"; 
+                        else if (currentActiveMode !== 'scale') {
+                            if (relIdx === 3 || relIdx === 4) color = "#94a3b8"; 
+                            if (relIdx === 6 || relIdx === 7 || relIdx === 8) color = "#64748b"; 
+                        } else if (structureKey === 'blues' && relIdx === 6) {
+                            color = "#38bdf8"; 
                         }
-                        
-                        const label = showIntervals ? INTERVAL_LABELS[relNoteIdx] : NOTES[noteIdx];
-                        const x = f === 0 ? -20 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
-                        drawNote(x, y, label, isRoot, isBlueNote, color, notesG);
+
+                        drawNote(x, y, label, isRoot, color);
                     }
                 }
             }
         }
 
-        function drawDot(x, y, parent) {
-            const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            dot.setAttribute("cx", x); dot.setAttribute("cy", y); dot.setAttribute("r", "5");
-            dot.setAttribute("fill", "rgba(197, 160, 89, 0.1)");
-            parent.appendChild(dot);
-        }
-
-        function drawNote(x, y, label, isRoot, isBlueNote, color, parent) {
-            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            circle.setAttribute("cx", x); circle.setAttribute("cy", y); circle.setAttribute("r", "10");
-            circle.setAttribute("fill", color);
-            
-            if (isBlueNote || isRoot) {
-                circle.setAttribute("filter", "drop-shadow(0 0 3px " + color + ")");
+        function drawNote(x, y, label, isRoot, color) {
+            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", "11");
+            c.setAttribute("fill", color);
+            if (isRoot) {
+                c.setAttribute("filter", "drop-shadow(0 0 6px rgba(197, 160, 89, 0.6))");
+                c.setAttribute("stroke", "#000");
+                c.setAttribute("stroke-width", "1");
             }
             
-            const textNote = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            textNote.setAttribute("x", x); textNote.setAttribute("y", y + 3); 
-            textNote.setAttribute("text-anchor", "middle");
-            textNote.setAttribute("fill", "black");
-            textNote.setAttribute("style", "font-size: 8px; font-weight: 800; pointer-events: none;");
-            textNote.textContent = label;
-            
-            group.appendChild(circle); group.appendChild(textNote);
-            parent.appendChild(group);
+            const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            t.setAttribute("x", x); t.setAttribute("y", y + 3.5);
+            t.setAttribute("text-anchor", "middle");
+            t.setAttribute("fill", "#000");
+            t.setAttribute("style", "font-size: 9px; font-weight: 900; pointer-events: none;");
+            t.textContent = label;
+
+            g.appendChild(c); g.appendChild(t);
+            document.getElementById('notesG').appendChild(g);
         }
 
-        const container = document.getElementById('fretContainer');
-        let isDown = false; let startX; let scrollLeft;
-
-        container.addEventListener('mousedown', (e) => {
-            isDown = true; startX = e.pageX - container.offsetLeft; scrollLeft = container.scrollLeft;
-        });
-        container.addEventListener('mouseleave', () => isDown = false);
-        container.addEventListener('mouseup', () => isDown = false);
-        container.addEventListener('mousemove', (e) => {
-            if(!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - container.offsetLeft;
-            const walk = (x - startX) * 2;
-            container.scrollLeft = scrollLeft - walk;
-        });
-
-        window.onload = renderFretboard;
+        window.onload = () => {
+            setupKeyPad();
+            renderFretboard();
+        };
     </script>
 </body>
 </html>
+
