@@ -120,7 +120,6 @@
 
     <main class="max-w-6xl mx-auto px-6">
         
-        <!-- Interactive Explorer -->
         <div class="luxury-card rounded-sm p-8 mb-12">
             <div class="flex items-center justify-between mb-10 border-b border-[#c5a059]/20 pb-6">
                 <h2 class="text-2xl serif-font italic text-[#c5a059]">Fretboard Explorer</h2>
@@ -148,8 +147,14 @@
                     </select>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Scale / Mode</label>
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Structure</label>
                     <select id="scaleSelect" onchange="renderFretboard()">
+                        <optgroup label="7th Arpeggios">
+                            <option value="maj7">Major 7th (1 3 5 7)</option>
+                            <option value="dom7">Dominant 7th (1 3 5 b7)</option>
+                            <option value="min7">Minor 7th (1 b3 5 b7)</option>
+                            <option value="m7b5">Minor 7b5 (1 b3 b5 b7)</option>
+                        </optgroup>
                         <optgroup label="Diatonic Modes">
                             <option value="major">Ionian (Major)</option>
                             <option value="dorian">Dorian</option>
@@ -159,7 +164,7 @@
                             <option value="minor">Aeolian (Minor)</option>
                             <option value="locrian">Locrian</option>
                         </optgroup>
-                        <optgroup label="Pentatonic">
+                        <optgroup label="Pentatonic & Blues">
                             <option value="pentatonicMajor">Pentatonic Major</option>
                             <option value="pentatonicMinor" selected>Pentatonic Minor</option>
                             <option value="blues">Blues Scale</option>
@@ -210,13 +215,12 @@
                 </div>
                 <div class="flex items-center gap-3">
                     <div class="w-2 h-2 rounded-full bg-slate-100"></div>
-                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Scale Degrees</span>
+                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Degrees</span>
                 </div>
             </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
-            <!-- Theory Teaching Notes -->
             <div class="md:col-span-2 luxury-card p-8">
                 <h3 class="serif-font text-2xl italic text-[#c5a059] mb-6">Interval Theory Notes</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -253,10 +257,8 @@
                         </tbody>
                     </table>
                 </div>
-                <p class="mt-6 text-xs text-slate-500 italic">"Distance" refers to the number of frets from the root note on a single string.</p>
             </div>
 
-            <!-- Standard Quick Links -->
             <div class="space-y-6">
                 <div class="luxury-card p-6 space-y-4">
                     <h3 class="serif-font text-lg italic border-b border-[#c5a059]/20 pb-2">Mastery Resources</h3>
@@ -269,14 +271,10 @@
                             Free Lessons 
                             <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
                         </a>
-                        <a href="https://www.musictheory.net" target="_blank" class="group text-[10px] font-bold text-[#c5a059] hover:text-white transition-all tracking-widest uppercase flex items-center justify-between">
-                            Theory Drills 
-                            <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                        </a>
                         <div class="pt-4 border-t border-white/5">
                             <p class="text-[10px] text-slate-500 leading-relaxed italic">
                                 Tuning: E A D G B E<br>
-                                Shift: 1 Fret = 1 Semitone
+                                1 Fret = 1 Semitone
                             </p>
                         </div>
                     </div>
@@ -293,7 +291,13 @@
             0: 'R', 1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7'
         };
 
-        const SCALES = {
+        const STRUCTURES = {
+            // Arpeggios
+            maj7: [0, 4, 7, 11],
+            dom7: [0, 4, 7, 10],
+            min7: [0, 3, 7, 10],
+            m7b5: [0, 3, 6, 10],
+            // Modes
             major: [0, 2, 4, 5, 7, 9, 11],
             dorian: [0, 2, 3, 5, 7, 9, 10],
             phrygian: [0, 1, 3, 5, 7, 8, 10],
@@ -301,6 +305,7 @@
             mixolydian: [0, 2, 4, 5, 7, 9, 10],
             minor: [0, 2, 3, 5, 7, 8, 10],
             locrian: [0, 1, 3, 5, 6, 8, 10],
+            // Pentatonic
             pentatonicMajor: [0, 2, 4, 7, 9],
             pentatonicMinor: [0, 3, 5, 7, 10],
             blues: [0, 3, 5, 6, 7, 10]
@@ -313,15 +318,14 @@
 
         function renderFretboard() {
             const key = document.getElementById('keySelect').value;
-            const scaleType = document.getElementById('scaleSelect').value;
+            const structureType = document.getElementById('scaleSelect').value;
             const showIntervals = document.getElementById('labelToggle').checked;
             const isOctaveOnly = document.getElementById('octaveToggle').checked;
             
-            // Show/Hide blue note legend
-            document.getElementById('blueNoteLegend').style.display = scaleType === 'blues' ? 'flex' : 'none';
+            document.getElementById('blueNoteLegend').style.display = structureType === 'blues' ? 'flex' : 'none';
 
             const rootIndex = NOTES.indexOf(key);
-            let displayNotes = isOctaveOnly ? [rootIndex] : SCALES[scaleType].map(i => (rootIndex + i) % 12);
+            let displayNotes = isOctaveOnly ? [rootIndex] : STRUCTURES[structureType].map(i => (rootIndex + i) % 12);
 
             const fretsG = document.getElementById('fretsG');
             const stringsG = document.getElementById('stringsG');
@@ -372,7 +376,7 @@
                     if (displayNotes.includes(noteIdx)) {
                         const relNoteIdx = (noteIdx - rootIndex + 12) % 12;
                         const isRoot = noteIdx === rootIndex;
-                        const isBlueNote = scaleType === 'blues' && relNoteIdx === 6;
+                        const isBlueNote = structureType === 'blues' && relNoteIdx === 6;
                         
                         let color = isRoot ? "#c5a059" : "#e5e5e5";
                         if (isBlueNote) color = "#38bdf8";
