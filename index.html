@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codguy's Guitar World | Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #c5a059;
+            --gold-light: #e2c275;
+            --obsidian: #0f0f0f;
+            --charcoal: #1a1a1a;
+            --blue-note: #38bdf8;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--obsidian);
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+        .serif-font { font-family: 'Playfair Display', serif; }
+        
+        .gold-gradient {
+            background: linear-gradient(135deg, #c5a059 0%, #f9f295 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .luxury-card {
+            background: linear-gradient(145deg, #1e1e1e, #141414);
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            transition: border-color 0.3s ease;
+        }
+        .luxury-card:hover {
+            border-color: rgba(197, 160, 89, 0.5);
+        }
+
+        .fretboard-container {
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) transparent;
+            padding-bottom: 10px;
+        }
+        .fretboard-container::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
+        
+        .fret-num { font-size: 10px; fill: #666; font-weight: 600; letter-spacing: 1px; }
+        
+        select {
+            background: #111;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            outline: none;
+            width: 100%;
+            appearance: none;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 42px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #111;
+            transition: .4s;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 34px;
+            width: calc(50% - 8px);
+            left: 4px;
+            bottom: 3px;
+            background: linear-gradient(135deg, #c5a059, #8b6e37);
+            transition: .4s;
+            z-index: 0;
+        }
+        input:checked + .slider:before {
+            transform: translateX(calc(100% + 8px));
+        }
+        .slider span { z-index: 1; transition: color 0.4s; }
+        input:not(:checked) + .slider .label-off { color: #000; }
+        input:checked + .slider .label-on { color: #000; }
+
+        .theory-table th { color: var(--gold); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px; border-bottom: 1px solid rgba(197, 160, 89, 0.2); }
+        .theory-table td { font-size: 11px; padding: 8px; color: #aaa; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .blue-note-highlight { color: var(--blue-note) !important; font-weight: bold; }
+    </style>
+</head>
+<body class="pb-28">
+
+    <header class="p-12 pt-20 relative text-center">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[#c5a059]/10 blur-[150px] rounded-full"></div>
+        <div class="inline-block px-4 py-1 mb-6 text-[9px] font-bold tracking-[0.4em] border border-[#c5a059]/40 text-[#c5a059] rounded-sm">CURATED MASTERY</div>
+        <h1 class="text-5xl md:text-7xl serif-font font-bold mb-4 italic tracking-tight">
+            Codguy's <span class="gold-gradient">Guitar</span> World
+        </h1>
+        <p class="text-slate-500 font-light text-sm tracking-[0.2em] uppercase">Bespoke Theory & Fretboard Visualization</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6">
+        
+        <!-- Interactive Explorer -->
+        <div class="luxury-card rounded-sm p-8 mb-12">
+            <div class="flex items-center justify-between mb-10 border-b border-[#c5a059]/20 pb-6">
+                <h2 class="text-2xl serif-font italic text-[#c5a059]">Fretboard Explorer</h2>
+                <div class="hidden md:flex gap-4 text-[10px] font-bold tracking-widest text-slate-500">
+                    <span>ANALYZE</span> / <span>VISUALIZE</span> / <span>PRACTICE</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                <div class="space-y-2">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Root Tone</label>
+                    <select id="keySelect" onchange="renderFretboard()">
+                        <option value="C">C Natural</option>
+                        <option value="C#">C# / Db</option>
+                        <option value="D">D Natural</option>
+                        <option value="D#">D# / Eb</option>
+                        <option value="E" selected>E Natural</option>
+                        <option value="F">F Natural</option>
+                        <option value="F#">F# / Gb</option>
+                        <option value="G">G Natural</option>
+                        <option value="G#">G# / Ab</option>
+                        <option value="A">A Natural</option>
+                        <option value="A#">A# / Bb</option>
+                        <option value="B">B Natural</option>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Scale / Mode</label>
+                    <select id="scaleSelect" onchange="renderFretboard()">
+                        <optgroup label="Diatonic Modes">
+                            <option value="major">Ionian (Major)</option>
+                            <option value="dorian">Dorian</option>
+                            <option value="phrygian">Phrygian</option>
+                            <option value="lydian">Lydian</option>
+                            <option value="mixolydian">Mixolydian</option>
+                            <option value="minor">Aeolian (Minor)</option>
+                            <option value="locrian">Locrian</option>
+                        </optgroup>
+                        <optgroup label="Pentatonic">
+                            <option value="pentatonicMajor">Pentatonic Major</option>
+                            <option value="pentatonicMinor" selected>Pentatonic Minor</option>
+                            <option value="blues">Blues Scale</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Labeling</label>
+                    <label class="switch">
+                        <input type="checkbox" id="labelToggle" onchange="renderFretboard()">
+                        <span class="slider">
+                            <span class="label-off">Note Name</span>
+                            <span class="label-on">Interval</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[9px] font-bold uppercase tracking-widest text-slate-500">Focus Area</label>
+                    <label class="switch">
+                        <input type="checkbox" id="octaveToggle" onchange="renderFretboard()">
+                        <span class="slider">
+                            <span class="label-off">Full Neck</span>
+                            <span class="label-on">Octave Focus</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="fretboard-container">
+                <svg id="fretboardSvg" width="1050" height="230" viewBox="-40 0 1050 230">
+                    <rect x="0" y="20" width="1000" height="150" fill="#121212" rx="2"/>
+                    <g id="stringsG"></g>
+                    <g id="fretsG"></g>
+                    <g id="markersG"></g>
+                    <g id="notesG"></g>
+                    <g id="labelsG"></g>
+                </svg>
+            </div>
+
+            <div class="mt-8 flex justify-center gap-10">
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-[#c5a059] shadow-[0_0_10px_#c5a059]"></div>
+                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Tonic (Root)</span>
+                </div>
+                <div class="flex items-center gap-3" id="blueNoteLegend" style="display: none;">
+                    <div class="w-2 h-2 rounded-full bg-[#38bdf8] shadow-[0_0_10px_#38bdf8]"></div>
+                    <span class="text-[10px] font-semibold tracking-widest text-[#38bdf8] uppercase">The Blue Note (b5)</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full bg-slate-100"></div>
+                    <span class="text-[10px] font-semibold tracking-widest text-slate-400 uppercase">Scale Degrees</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+            <!-- Theory Teaching Notes -->
+            <div class="md:col-span-2 luxury-card p-8">
+                <h3 class="serif-font text-2xl italic text-[#c5a059] mb-6">Interval Theory Notes</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <table class="theory-table w-full text-left">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Distance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Root (1)</td><td>0 Semitones</td></tr>
+                            <tr><td>Minor Second (b2)</td><td>1 Semitone</td></tr>
+                            <tr><td>Major Second (2)</td><td>2 Semitones</td></tr>
+                            <tr><td>Minor Third (b3)</td><td>3 Semitones</td></tr>
+                            <tr><td>Major Third (3)</td><td>4 Semitones</td></tr>
+                            <tr><td>Perfect Fourth (4)</td><td>5 Semitones</td></tr>
+                        </tbody>
+                    </table>
+                    <table class="theory-table w-full text-left">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Distance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="blue-note-highlight"><td>The Blue Note (b5)</td><td>6 Semitones</td></tr>
+                            <tr><td>Perfect Fifth (5)</td><td>7 Semitones</td></tr>
+                            <tr><td>Minor Sixth (b6)</td><td>8 Semitones</td></tr>
+                            <tr><td>Major Sixth (6)</td><td>9 Semitones</td></tr>
+                            <tr><td>Minor Seventh (b7)</td><td>10 Semitones</td></tr>
+                            <tr><td>Major Seventh (7)</td><td>11 Semitones</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="mt-6 text-xs text-slate-500 italic">"Distance" refers to the number of frets from the root note on a single string.</p>
+            </div>
+
+            <!-- Standard Quick Links -->
+            <div class="space-y-6">
+                <div class="luxury-card p-6 space-y-4">
+                    <h3 class="serif-font text-lg italic border-b border-[#c5a059]/20 pb-2">Mastery Resources</h3>
+                    <div class="flex flex-col gap-3 pt-2">
+                        <a href="https://www.ultimate-guitar.com" target="_blank" class="group text-[10px] font-bold text-[#c5a059] hover:text-white transition-all tracking-widest uppercase flex items-center justify-between">
+                            Chords & Tabs 
+                            <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="https://www.justinguitar.com" target="_blank" class="group text-[10px] font-bold text-[#c5a059] hover:text-white transition-all tracking-widest uppercase flex items-center justify-between">
+                            Free Lessons 
+                            <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <a href="https://www.musictheory.net" target="_blank" class="group text-[10px] font-bold text-[#c5a059] hover:text-white transition-all tracking-widest uppercase flex items-center justify-between">
+                            Theory Drills 
+                            <i class="fa-solid fa-arrow-up-right-from-square opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                        </a>
+                        <div class="pt-4 border-t border-white/5">
+                            <p class="text-[10px] text-slate-500 leading-relaxed italic">
+                                Tuning: E A D G B E<br>
+                                Shift: 1 Fret = 1 Semitone
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+        const TUNING = [4, 11, 7, 2, 9, 4]; 
+        
+        const INTERVAL_LABELS = {
+            0: 'R', 1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7'
+        };
+
+        const SCALES = {
+            major: [0, 2, 4, 5, 7, 9, 11],
+            dorian: [0, 2, 3, 5, 7, 9, 10],
+            phrygian: [0, 1, 3, 5, 7, 8, 10],
+            lydian: [0, 2, 4, 6, 7, 9, 11],
+            mixolydian: [0, 2, 4, 5, 7, 9, 10],
+            minor: [0, 2, 3, 5, 7, 8, 10],
+            locrian: [0, 1, 3, 5, 6, 8, 10],
+            pentatonicMajor: [0, 2, 4, 7, 9],
+            pentatonicMinor: [0, 3, 5, 7, 10],
+            blues: [0, 3, 5, 6, 7, 10]
+        };
+
+        const NUM_FRETS = 14;
+        const FRET_WIDTH = 65;
+        const STRING_SPACE = 25;
+        const START_Y = 35;
+
+        function renderFretboard() {
+            const key = document.getElementById('keySelect').value;
+            const scaleType = document.getElementById('scaleSelect').value;
+            const showIntervals = document.getElementById('labelToggle').checked;
+            const isOctaveOnly = document.getElementById('octaveToggle').checked;
+            
+            // Show/Hide blue note legend
+            document.getElementById('blueNoteLegend').style.display = scaleType === 'blues' ? 'flex' : 'none';
+
+            const rootIndex = NOTES.indexOf(key);
+            let displayNotes = isOctaveOnly ? [rootIndex] : SCALES[scaleType].map(i => (rootIndex + i) % 12);
+
+            const fretsG = document.getElementById('fretsG');
+            const stringsG = document.getElementById('stringsG');
+            const markersG = document.getElementById('markersG');
+            const notesG = document.getElementById('notesG');
+            const labelsG = document.getElementById('labelsG');
+
+            [fretsG, stringsG, markersG, notesG, labelsG].forEach(g => g.innerHTML = '');
+
+            for(let i = 0; i <= NUM_FRETS; i++) {
+                const x = i * FRET_WIDTH;
+                const fret = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                fret.setAttribute("x1", x); fret.setAttribute("y1", 20);
+                fret.setAttribute("x2", x); fret.setAttribute("y2", 170);
+                fret.setAttribute("stroke", i === 0 ? "#c5a059" : "#333");
+                fret.setAttribute("stroke-width", i === 0 ? "4" : "1");
+                fretsG.appendChild(fret);
+
+                const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                const labelX = i === 0 ? 0 : (x - FRET_WIDTH/2);
+                text.setAttribute("x", labelX); text.setAttribute("y", 205);
+                text.setAttribute("class", "fret-num"); text.setAttribute("text-anchor", "middle");
+                text.textContent = i === 0 ? "NUT" : i;
+                labelsG.appendChild(text);
+            }
+
+            [3, 5, 7, 9, 12].forEach(f => {
+                const x = (f * FRET_WIDTH) - (FRET_WIDTH/2);
+                if (f === 12) {
+                    drawDot(x, 75, markersG); drawDot(x, 115, markersG);
+                } else {
+                    drawDot(x, 95, markersG);
+                }
+            });
+
+            for(let s = 0; s < 6; s++) {
+                const y = START_Y + (s * STRING_SPACE);
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", 0); line.setAttribute("y1", y);
+                line.setAttribute("x2", NUM_FRETS * FRET_WIDTH); line.setAttribute("y2", y);
+                line.setAttribute("stroke", "#2a2a2a"); 
+                line.setAttribute("stroke-width", 1 + (s * 0.4));
+                stringsG.appendChild(line);
+
+                const openNoteIdx = TUNING[s];
+                for(let f = 0; f <= NUM_FRETS; f++) {
+                    const noteIdx = (openNoteIdx + f) % 12;
+                    if (displayNotes.includes(noteIdx)) {
+                        const relNoteIdx = (noteIdx - rootIndex + 12) % 12;
+                        const isRoot = noteIdx === rootIndex;
+                        const isBlueNote = scaleType === 'blues' && relNoteIdx === 6;
+                        
+                        let color = isRoot ? "#c5a059" : "#e5e5e5";
+                        if (isBlueNote) color = "#38bdf8";
+                        
+                        const label = showIntervals ? INTERVAL_LABELS[relNoteIdx] : NOTES[noteIdx];
+                        const x = f === 0 ? -20 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
+                        drawNote(x, y, label, isRoot, isBlueNote, color, notesG);
+                    }
+                }
+            }
+        }
+
+        function drawDot(x, y, parent) {
+            const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            dot.setAttribute("cx", x); dot.setAttribute("cy", y); dot.setAttribute("r", "5");
+            dot.setAttribute("fill", "rgba(197, 160, 89, 0.1)");
+            parent.appendChild(dot);
+        }
+
+        function drawNote(x, y, label, isRoot, isBlueNote, color, parent) {
+            const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", x); circle.setAttribute("cy", y); circle.setAttribute("r", "10");
+            circle.setAttribute("fill", color);
+            
+            if (isBlueNote || isRoot) {
+                circle.setAttribute("filter", "drop-shadow(0 0 3px " + color + ")");
+            }
+            
+            const textNote = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            textNote.setAttribute("x", x); textNote.setAttribute("y", y + 3); 
+            textNote.setAttribute("text-anchor", "middle");
+            textNote.setAttribute("fill", "black");
+            textNote.setAttribute("style", "font-size: 8px; font-weight: 800; pointer-events: none;");
+            textNote.textContent = label;
+            
+            group.appendChild(circle); group.appendChild(textNote);
+            parent.appendChild(group);
+        }
+
+        window.onload = renderFretboard;
+    </script>
+</body>
+</html>
