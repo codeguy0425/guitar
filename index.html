@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Codeguy's Guitar World | Mastery</title>
     
+    <!-- PWA Primary Meta Tags -->
     <meta name="theme-color" content="#0f0f0f">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Guitar World">
     
-    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAAADrcmeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD00lEQVR4nO2bz2sTQRTHv0mbtI2mSdtYalMvYvCgCD1486B48+Bf4M2Dh+LBv8CDYvHgX+BB8eZf4M2Dh6L0IPGgeKtg8S8QYmxtSptS29S0Sbs7HnbSbtI0u8m+7G6S7wPD7uy878y8N2/ezAtIKKQUUkoppZRSSimllFJKKaWUUkoppZRSSiml/h9EAtZAnAnvAsAnAN9Is9vS7I70XGZ3A9L9uTR/Kd2vS89N6fmN9A0An+X789L3BfAt6fsO8B3p+1m+/yR9f6U6NID7v0H6S8A08ALAGID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f6/p66bhTOh6VjjulY2S+/3S777Ppt3RcLh0vS8fI/PlH9X159X1XOn6Ujpcl/mP6vW0A1vV7t0v8XfretgF8S39f37un3x9I7Dvp70vsn+m+r7Dvo8S+0X1f7L69EvunEvvY7p+U2D8p8Z9K/IcS/6vEvynxv0n8WxL/scS/I/FvSfx7Ev+OxL8r8W9I/OsS/4rEvyrxf0v86xK/IvEvSvxzEv+MxD8t8U9K/KMS/6DEPyDxd0v8nRL/oMTfL/F3SfwtEn+zxN8k8S8X2D8m8Scl/pM+fNcl/paH39fS+0Lp+Y70fS99v5S+X0rPn+S2m3K7Zem5LD2XpfuydL8mPZel56r0XJXuy9Lzl/T8LT3XpOdP6bkpPf9Iz03peSg9D6XnqfQ8lZ6f0vNUev6SnpfS81Z63krP39Lzj/T8Kz0vpedf6XkY1qYpYBrAmAA8BrABYCPASscb0vGbdPwmHb9Lx33Scb90fCwdf0vHn9LxWDrelo63peNt6XhHOn6Ujp+l47F0vCUdH0vHX9LxV9idZ4BZAOcALAdYCbDS8aR0/Cwdv0vH79LxhHTcJx0fS8fI0vGndDwuHV9Nx/XS8b50XC8dD6TjXul4QDpC0rEx37+X27790nGn9D/pSMe/7+P+NID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO9f8f2HEn9K/KMSf7fE3ynxD0r8/RJ/l8TfIvE3S/xNEv9ygf1jEn9S4j/pw3dd4m95+H0tvS+Unu9I3/fS90vp+6X0/Eluuy63m5aeK9LzW3peK9LzR3quSs9V6b4sPX9Jz9/Sc016/pSemyX/m9LzUHoeks3/A+i/C67XWInEAAAAAElFTkSuQmCC">
+    <!-- EMBEDDED ICON (Base64) - This ensures the icon is always available offline -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAAADrcmeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD00lEQVR4nO2bz2sTQRTHv0mbtI2mSdtYalMvYvCgCD1486B48+Bf4M2Dh+LBv8CDYvHgX+BB8eZf4M2Dh6L0IPGgeKtg8S8QYmxtSptS29S0Sbs7HnbSbtI0u8m+7G6S7wPD7uy878y8N2/ezAtIKKQUUkoppZRSSimllFJKKaWUUkoppZRSSiml/h9EAtZAnAnvAsAnAN9Is9vS7I70XGZ3A9L9uTR/Kd2vS89N6fmN9A0An+X789L3BfAt6fsO8B3p+1m+/yR9f6U6NID7v0H6S8A08ALAGID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f6/p66bhTOh6VjjulY2S+/3S777Ppt3RcLh0vS8fI/PlH9X159X1XOn6Ujpcl/mP6vW0A1vV7t0v8XfretgF8S39f37un3x9I7Dvp70vsn+m+r7Dvo8S+0X1f7L69EvunEvvY7p+U2D8p8Z9K/IcS/6vEvynxv0n8WxL/scS/I/FvSfx7Ev+OxL8r8W9I/OsS/4rEvyrxf0v86xK/IvEvSvxzEv+MxD8t8U9K/KMS/6DEPyDxd0v8nRL/oMTfL/F3SfwtEn+zxN8k8S8X2D8m8Scl/pM+fNcl/paH39fS+0Lp+Y70fS99v5S+X0rPn+S2m3K7Zem5LD2XpfuydL8mPZel56r0XJXuy9Lzl/T8LT3XpOdP6bkpPf9Iz03peSg9D6XnqfQ8lZ6f0vNUev6SnpfS81Z63krP39Lzj/T8Kz0vpedf6XkY1qYpYBrAmAA8BrABYCPASscb0vGbdPwmHb9Lx33Scb90fCwdf0vHn9LxWDrelo63peNt6XhHOn6Ujp+l47F0vCUdH0vHX9LxV9idZ4BZAOcALAdYCbDS8aR0/Cwdv0vH79LxhHTcJx0fS8fI0vGndDwuHV9Nx/XS8b50XC8dD6TjXul4QDpC0rEx37+X27790nGn9D/pSMe/7+P+NID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f8f2HEn9K/KMSf7fE3ynxD0r8/RJ/l8TfIvE3S/xNEv9ygf1jEn9S4j/pw3dd4m95+H0tvS+Unu9I3/fS90vp+6X0/Eluuy63m5aeK9LzW3peK9LzR3quSs9V6b4sPX9Jz9/Sc016/pSemyX/m9LzUHoeks3/A+i/C67XWInEAAAAAElFTkSuQmCC">
     <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAAADrcmeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD00lEQVR4nO2bz2sTQRTHv0mbtI2mSdtYalMvYvCgCD1486B48+Bf4M2Dh+LBv8CDYvHgX+BB8eZf4M2Dh6L0IPGgeKtg8S8QYmxtSptS29S0Sbs7HnbSbtI0u8m+7G6S7wPD7uy878y8N2/ezAtIKKQUUkoppZRSSimllFJKKaWUUkoppZRSSiml/h9EAtZAnAnvAsAnAN9Is9vS7I70XGZ3A9L9uTR/Kd2vS89N6fmN9A0An+X789L3BfAt6fsO8B3p+1m+/yR9f6U6NID7v0H6S8A08ALAGID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f6/p66bhTOh6VjjulY2S+/3S777Ppt3RcLh0vS8fI/PlH9X159X1XOn6Ujpcl/mP6vW0A1vV7t0v8XfretgF8S39f37un3x9I7Dvp70vsn+m+r7Dvo8S+0X1f7L69EvunEvvY7p+U2D8p8Z9K/IcS/6vEvynxv0n8WxL/scS/I/FvSfx7Ev+OxL8r8W9I/OsS/4rEvyrxf0v86xK/IvEvSvxzEv+MxD8t8U9K/KMS/6DEPyDxd0v8nRL/oMTfL/F3SfwtEn+zxN8k8S8X2D8m8Scl/pM+fNcl/paH39fS+0Lp+Y70fS99v5S+X0rPn+S2m3K7Zem5LD2XpfuydL8mPZel56r0XJXuy9Lzl/T8LT3XpOdP6bkpPf9Iz03peSg9D6XnqfQ8lZ6f0vNUev6SnpfS81Z63krP39Lzj/T8Kz0vpedf6XkY1qYpYBrAmAA8BrABYCPASscb0vGbdPwmHb9Lx33Scb90fCwdf0vHn9LxWDrelo63peNt6XhHOn6Ujp+l47F0vCUdH0vHX9LxV9idZ4BZAOcALAdYCbDS8aR0/Cwdv0vH79LxhHTcJx0fS8fI0vGndDwuHV9Nx/XS8b50XC8dD6TjXul4QDpC0rEx37+X27790nGn9D/pSMe/7+P+NID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f8f2HEn9K/KMSf7fE3ynxD0r8/RJ/l8TfIvE3S/xNEv9ygf1jEn9S4j/pw3dd4m95+H0tvS+Unu9I3/fS90vp+6X0/Eluuy63m5aeK9LzW3peK9LzR3quSs9V6b4sPX9Jz9/Sc016/pSemyX/m9LzUHoeks3/A+i/C67XWInEAAAAAElFTkSuQmCC">
 
+    <!-- Dynamic PWA Manifest Generation -->
     <script>
+        const iconData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAAADrcmeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD00lEQVR4nO2bz2sTQRTHv0mbtI2mSdtYalMvYvCgCD1486B48+Bf4M2Dh+LBv8CDYvHgX+BB8eZf4M2Dh6L0IPGgeKtg8S8QYmxtSptS29S0Sbs7HnbSbtI0u8m+7G6S7wPD7uy878y8N2/ezAtIKKQUUkoppZRSSimllFJKKaWUUkoppZRSSiml/h9EAtZAnAnvAsAnAN9Is9vS7I70XGZ3A9L9uTR/Kd2vS89N6fmN9A0An+X789L3BfAt6fsO8B3p+1m+/yR9f6U6NID7v0H6S8A08ALAGID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f6/p66bhTOh6VjjulY2S+/3S777Ppt3RcLh0vS8fI/PlH9X159X1XOn6Ujpcl/mP6vW0A1vV7t0v8XfretgF8S39f37un3x9I7Dvp70vsn+m+r7Dvo8S+0X1f7L69EvunEvvY7p+U2D8p8Z9K/IcS/6vEvynxv0n8WxL/scS/I/FvSfx7Ev+OxL8r8W9I/OsS/4rEvyrxf0v86xK/IvEvSvxzEv+MxD8t8U9K/KMS/6DEPyDxd0v8nRL/oMTfL/F3SfwtEn+zxN8k8S8X2D8m8Scl/pM+fNcl/paH39fS+0Lp+Y70fS99v5S+X0rPn+S2m3K7Zem5LD2XpfuydL8mPZel56r0XJXuy9Lzl/T8LT3XpOdP6bkpPf9Iz03peSg9D6XnqfQ8lZ6f0vNUev6SnpfS81Z63krP39Lzj/T8Kz0vpedf6XkY1qYpYBrAmAA8BrABYCPASscb0vGbdPwmHb9Lx33Scb90fCwdf0vHn9LxWDrelo63peNt6XhHOn6Ujp+l47F0vCUdH0vHX9LxV9idZ4BZAOcALAdYCbDS8aR0/Cwdv0vH79LxhHTcJx0fS8fI0vGndDwuHV9Nx/XS8b50XC8dD6TjXul4QDpC0rEx37+X27790nGn9D/pSMe/7+P+NID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f8f2HEn9K/KMSf7fE3ynxD0r8/RJ/l8TfIvE3S/xNEv9ygf1jEn9S4j/pw3dd4m95+H0tvS+Unu9I3/fS90vp+6X0/Eluuy63m5aeK9LzW3peK9LzR3quSs9V6b4sPX9Jz9/Sc016/pSemyX/m9LzUHoeks3/A+i/C67XWInEAAAAAElFTkSuQmCC";
         const manifest = {
             "name": "Codeguy Guitar World",
             "short_name": "GuitarWorld",
@@ -22,18 +26,23 @@
             "display": "standalone",
             "background_color": "#0f0f0f",
             "theme_color": "#c5a059",
-            "icons": [{
-                "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAAADrcmeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD00lEQVR4nO2bz2sTQRTHv0mbtI2mSdtYalMvYvCgCD1486B48+Bf4M2Dh+LBv8CDYvHgX+BB8eZf4M2Dh6L0IPGgeKtg8S8QYmxtSptS29S0Sbs7HnbSbtI0u8m+7G6S7wPD7uy878y8N2/ezAtIKKQUUkoppZRSSimllFJKKaWUUkoppZRSSiml/h9EAtZAnAnvAsAnAN9Is9vS7I70XGZ3A9L9uTR/Kd2vS89N6fmN9A0An+X789L3BfAt6fsO8B3p+1m+/yR9f6U6NID7v0H6S8A08ALAGID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f6/p66bhTOh6VjjulY2S+/3S777Ppt3RcLh0vS8fI/PlH9X159X1XOn6Ujpcl/mP6vW0A1vV7t0v8XfretgF8S39f37un3x9I7Dvp70vsn+m+r7Dvo8S+0X1f7L69EvunEvvY7p+U2D8p8Z9K/IcS/6vEvynxv0n8WxL/scS/I/FvSfx7Ev+OxL8r8W9I/OsS/4rEvyrxf0v86xK/IvEvSvxzEv+MxD8t8U9K/KMS/6DEPyDxd0v8nRL/oMTfL/F3SfwtEn+zxN8k8S8X2D8m8Scl/pM+fNcl/paH39fS+0Lp+Y70fS99v5S+X0rPn+S2m3K7Zem5LD2XpfuydL8mPZel56r0XJXuy9Lzl/T8LT3XpOdP6bkpPf9Iz03peSg9D6XnqfQ8lZ6f0vNUev6SnpfS81Z63krP39Lzj/T8Kz0vpedf6XkY1qYpYBrAmAA8BrABYCPASscb0vGbdPwmHb9Lx33Scb90fCwdf0vHn9LxWDrelo63peNt6XhHOn6Ujp+l47F0vCUdH0vHX9LxV9idZ4BZAOcALAdYCbDS8aR0/Cwdv0vH79LxhHTcJx0fS8fI0vGndDwuHV9Nx/XS8b50XC8dD6TjXul4QDpC0rEx37+X27790nGn9D/pSMe/7+P+NID9AFYBrAdY6XhSOn6Wjt+l43fpeEI67pOOj6VjZOn4Uzoel46vpuN66XhfOq6XjgfSca90PCAdAenYmO/f8f2HEn9K/KMSf7fE3ynxD0r8/RJ/l8TfIvE3S/xNEv9ygf1jEn9S4j/pw3dd4m95+H0tvS+Unu9I3/fS90vp+6X0/Eluuy63m5aeK9LzW3peK9LzR3quSs9V6b4sPX9Jz9/Sc016/pSemyX/m9LzUHoeks3/A+i/C67XWInEAAAAAElFTkSuQmCC",
-                "sizes": "96x96",
-                "type": "image/png"
-            }]
+            "icons": [
+                {
+                    "src": iconData,
+                    "sizes": "96x96",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                }
+            ]
         };
         const stringManifest = JSON.stringify(manifest);
         const blob = new Blob([stringManifest], {type: 'application/json'});
         const manifestURL = URL.createObjectURL(blob);
-        document.querySelector('link[rel="manifest"]').setAttribute('href', manifestURL);
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = manifestURL;
+        document.head.appendChild(link);
     </script>
-    <link rel="manifest" href="">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -41,38 +50,158 @@
     
     <style>
         :root { --gold: #c5a059; --obsidian: #0f0f0f; --platinum: #e5e5e5; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--obsidian); color: var(--platinum); height: 100vh; display: flex; flex-direction: column; overflow: hidden; overscroll-behavior-y: contain; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--obsidian); 
+            color: var(--platinum); 
+            height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            overflow: hidden; 
+            overscroll-behavior-y: contain; 
+        }
         .serif-font { font-family: 'Playfair Display', serif; }
-        .gold-gradient { background: linear-gradient(135deg, #c5a059 0%, #f9f295 50%, #b8860b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .luxury-card { background: linear-gradient(145deg, #1e1e1e, #141414); border: 1px solid rgba(197, 160, 89, 0.2); box-shadow: 0 10px 30px rgba(0,0,0,0.5); min-width: fit-content; }
-        .mode-toggle { display: flex; background: #0a0a0a; border: 1px solid rgba(197, 160, 89, 0.2); padding: 2px; border-radius: 4px; }
-        .mode-btn { flex: 1; padding: 6px 4px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #666; transition: all 0.3s ease; }
+        .gold-gradient { 
+            background: linear-gradient(135deg, #c5a059 0%, #f9f295 50%, #b8860b 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+        .luxury-card { 
+            background: linear-gradient(145deg, #1e1e1e, #141414); 
+            border: 1px solid rgba(197, 160, 89, 0.2); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            min-width: fit-content; 
+        }
+        .mode-toggle { 
+            display: flex; 
+            background: #0a0a0a; 
+            border: 1px solid rgba(197, 160, 89, 0.2); 
+            padding: 2px; 
+            border-radius: 4px; 
+        }
+        .mode-btn { 
+            flex: 1; 
+            padding: 6px 4px; 
+            font-size: 9px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            color: #666; 
+            transition: all 0.3s ease; 
+        }
         .mode-btn.active { background: var(--gold); color: #000; border-radius: 2px; }
-        .key-btn { background: transparent; border: 1px solid rgba(197, 160, 89, 0.2); color: #888; transition: all 0.2s ease; font-size: 10px; font-weight: 700; min-width: 32px; }
-        .key-btn.active { background: var(--gold); color: black; border-color: var(--gold); box-shadow: 0 0 10px rgba(197, 160, 89, 0.3); }
-        .fretboard-wrapper { flex-grow: 1; display: flex; align-items: flex-start; justify-content: flex-start; overflow-x: auto; padding: 0px 10px 10px 0px; background: #0a0a0a; -webkit-overflow-scrolling: touch; }
+        .key-btn { 
+            background: transparent; 
+            border: 1px solid rgba(197, 160, 89, 0.2); 
+            color: #888; 
+            transition: all 0.2s ease; 
+            font-size: 10px; 
+            font-weight: 700; 
+            min-width: 32px; 
+        }
+        .key-btn.active { 
+            background: var(--gold); 
+            color: black; 
+            border-color: var(--gold); 
+            box-shadow: 0 0 10px rgba(197, 160, 89, 0.3); 
+        }
+        .fretboard-wrapper { 
+            flex-grow: 1; 
+            display: flex; 
+            align-items: flex-start; 
+            justify-content: flex-start; 
+            overflow-x: auto; 
+            padding: 0px 10px 10px 0px; 
+            background: #0a0a0a; 
+            -webkit-overflow-scrolling: touch; 
+        }
         .fretboard-wrapper::-webkit-scrollbar { height: 6px; }
         .fretboard-wrapper::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
         .fretboard-wrapper::-webkit-scrollbar-track { background: #111; }
         .fret-num { font-size: 10px; fill: #666; font-weight: 800; }
-        select { background: #111; border: 1px solid rgba(197, 160, 89, 0.3); color: white; padding: 8px; border-radius: 4px; font-size: 12px; outline: none; width: 100%; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c5a059'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; background-size: 14px; }
+        
+        select { 
+            background: #111; 
+            border: 1px solid rgba(197, 160, 89, 0.3); 
+            color: white; 
+            padding: 8px; 
+            border-radius: 4px; 
+            font-size: 12px; 
+            outline: none; 
+            width: 100%; 
+            cursor: pointer; 
+            appearance: none; 
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23c5a059'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E"); 
+            background-repeat: no-repeat; 
+            background-position: right 8px center; 
+            background-size: 14px; 
+        }
+        
         .switch { position: relative; display: inline-block; width: 100%; height: 32px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #111; transition: .3s; border: 1px solid rgba(197, 160, 89, 0.1); display: flex; align-items: center; justify-content: space-between; padding: 0 8px; font-size: 8px; font-weight: 800; text-transform: uppercase; border-radius: 4px; }
-        .slider:before { position: absolute; content: ""; height: 24px; width: calc(50% - 6px); left: 3px; bottom: 3px; background: var(--gold); transition: .3s; border-radius: 2px; }
+        .slider { 
+            position: absolute; 
+            cursor: pointer; 
+            top: 0; left: 0; right: 0; bottom: 0; 
+            background-color: #111; 
+            transition: .3s; 
+            border: 1px solid rgba(197, 160, 89, 0.1); 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 8px; 
+            font-size: 8px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            border-radius: 4px; 
+        }
+        .slider:before { 
+            position: absolute; 
+            content: ""; 
+            height: 24px; 
+            width: calc(50% - 6px); 
+            left: 3px; 
+            bottom: 3px; 
+            background: var(--gold); 
+            transition: .3s; 
+            border-radius: 2px; 
+        }
         input:checked + .slider:before { transform: translateX(calc(100% + 6px)); }
         .slider span { z-index: 1; transition: color 0.3s; }
         input:not(:checked) + .slider .label-off { color: #000; }
         input:checked + .slider .label-on { color: #000; }
-        @media (max-width: 768px) { body { overflow-y: auto; height: auto; } .fretboard-wrapper { min-height: 350px; padding: 0; } header { padding: 1rem; } }
-        #pwaPrompt { display: none; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100; background: #1e1e1e; border: 1px solid var(--gold); padding: 16px; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.9); width: 90%; max-width: 380px; animation: slideUp 0.4s ease; }
+        
+        @media (max-width: 768px) { 
+            body { overflow-y: auto; height: auto; } 
+            .fretboard-wrapper { min-height: 350px; padding: 0; } 
+            header { padding: 1rem; } 
+        }
+        
+        #pwaPrompt { 
+            display: none; 
+            position: fixed; 
+            bottom: 24px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 100; 
+            background: #1e1e1e; 
+            border: 1px solid var(--gold); 
+            padding: 16px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.9); 
+            width: 90%; 
+            max-width: 380px; 
+            animation: slideUp 0.4s ease; 
+        }
         @keyframes slideUp { from { transform: translate(-50%, 100%); } to { transform: translate(-50%, 0); } }
     </style>
 </head>
 <body>
 
     <header class="w-full px-6 py-4 flex flex-col md:flex-row items-center justify-between border-b border-white/5 bg-[#0a0a0a]">
-        <h1 class="text-2xl serif-font font-bold italic tracking-tight mb-4 md:mb-0">Codeguy's <span class="gold-gradient">Guitar</span> World</h1>
+        <h1 class="text-2xl serif-font font-bold italic tracking-tight mb-4 md:mb-0">
+            Codeguy's <span class="gold-gradient">Guitar</span> World
+        </h1>
         <div id="keyPad" class="flex flex-wrap justify-center gap-1"></div>
     </header>
 
@@ -121,22 +250,52 @@
                 <div class="flex gap-2">
                     <div class="flex-1 space-y-1">
                         <label class="text-[9px] text-slate-500 uppercase font-bold">Labels</label>
-                        <label class="switch"><input type="checkbox" id="labelToggle" onchange="renderFretboard()"><span class="slider"><span class="label-off">Note</span><span class="label-on">Intv</span></span></label>
+                        <label class="switch">
+                            <input type="checkbox" id="labelToggle" onchange="renderFretboard()">
+                            <span class="slider">
+                                <span class="label-off">Note</span>
+                                <span class="label-on">Intv</span>
+                            </span>
+                        </label>
                     </div>
                     <div class="flex-1 space-y-1">
                         <label class="text-[9px] text-slate-500 uppercase font-bold">Isolation</label>
-                        <label class="switch"><input type="checkbox" id="octaveToggle" onchange="renderFretboard()"><span class="slider"><span class="label-off">Full</span><span class="label-on">Root</span></span></label>
+                        <label class="switch">
+                            <input type="checkbox" id="octaveToggle" onchange="renderFretboard()">
+                            <span class="slider">
+                                <span class="label-off">Full</span>
+                                <span class="label-on">Root</span>
+                            </span>
+                        </label>
                     </div>
                 </div>
             </div>
         </aside>
-        <main class="fretboard-wrapper"><div class="luxury-card p-2 rounded-sm mt-6"><svg id="fretboardSvg" height="190" class="block"><rect id="fretboardBg" x="0" y="20" height="150" fill="#121212" rx="2"/><g id="fretsG"></g><g id="markersG"></g><g id="stringsG"></g><g id="notesG"></g><g id="labelsG"></g></svg></div></main>
+        
+        <main class="fretboard-wrapper">
+            <div class="luxury-card p-2 rounded-sm mt-6">
+                <svg id="fretboardSvg" height="190" class="block">
+                    <rect id="fretboardBg" x="0" y="20" height="150" fill="#121212" rx="2"/>
+                    <g id="fretsG"></g>
+                    <g id="markersG"></g>
+                    <g id="stringsG"></g>
+                    <g id="notesG"></g>
+                    <g id="labelsG"></g>
+                </svg>
+            </div>
+        </main>
     </div>
 
+    <!-- PWA Installation Banner -->
     <div id="pwaPrompt" class="flex items-center justify-between">
         <div class="flex items-center gap-3">
-            <div class="w-12 h-12 bg-gold rounded-lg flex items-center justify-center shadow-lg"><i class="fas fa-guitar text-black text-xl"></i></div>
-            <div><p class="text-xs font-black text-white uppercase tracking-wider">Guitar World</p><p class="text-[10px] text-slate-400">Install for offline mastery</p></div>
+            <div class="w-12 h-12 bg-gold rounded-lg flex items-center justify-center shadow-lg">
+                <i class="fas fa-guitar text-black text-xl"></i>
+            </div>
+            <div>
+                <p class="text-xs font-black text-white uppercase tracking-wider">Guitar World</p>
+                <p class="text-[10px] text-slate-400">Install for offline mastery</p>
+            </div>
         </div>
         <div class="flex gap-2">
             <button id="closePwa" class="text-slate-500 text-[10px] p-2">Later</button>
@@ -145,16 +304,36 @@
     </div>
 
     <script>
-        // PWA Setup
+        // PWA Installation Handling
         let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; document.getElementById('pwaPrompt').style.display = 'flex'; });
-        document.getElementById('installBtn')?.addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; document.getElementById('pwaPrompt').style.display = 'none'; } });
-        document.getElementById('closePwa')?.addEventListener('click', () => { document.getElementById('pwaPrompt').style.display = 'none'; });
+        window.addEventListener('beforeinstallprompt', (e) => { 
+            e.preventDefault(); 
+            deferredPrompt = e; 
+            document.getElementById('pwaPrompt').style.display = 'flex'; 
+        });
+        
+        document.getElementById('installBtn')?.addEventListener('click', async () => { 
+            if (deferredPrompt) { 
+                deferredPrompt.prompt(); 
+                deferredPrompt = null; 
+                document.getElementById('pwaPrompt').style.display = 'none'; 
+            } 
+        });
+        
+        document.getElementById('closePwa')?.addEventListener('click', () => { 
+            document.getElementById('pwaPrompt').style.display = 'none'; 
+        });
 
+        // Guitar Logic Constants
         const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-        const TUNING = [4, 11, 7, 2, 9, 4];
+        const TUNING = [4, 11, 7, 2, 9, 4]; // E B G D A E
         const INTERVAL_LABELS = { 0: 'R', 1: 'b2', 2: '2', 3: 'b3', 4: '3', 5: '4', 6: 'b5', 7: '5', 8: 'b6', 9: '6', 10: 'b7', 11: '7' };
-        const STRUCTURES = { maj:[0,4,7], min:[0,3,7], dim:[0,3,6], major:[0,2,4,5,7,9,11], minor:[0,2,3,5,7,8,10], pentatonicMinor:[0,3,5,7,10], pentatonicMajor:[0,2,4,7,9], blues:[0,3,5,6,7,10], maj7:[0,4,7,11], min7:[0,3,7,10], dom7:[0,4,7,10], none:[0] };
+        const STRUCTURES = { 
+            maj:[0,4,7], min:[0,3,7], dim:[0,3,6], 
+            major:[0,2,4,5,7,9,11], minor:[0,2,3,5,7,8,10], 
+            pentatonicMinor:[0,3,5,7,10], pentatonicMajor:[0,2,4,7,9], blues:[0,3,5,6,7,10], 
+            maj7:[0,4,7,11], min7:[0,3,7,10], dom7:[0,4,7,10], none:[0] 
+        };
         const STRING_GROUPS = { all:[0,1,2,3,4,5], top:[3,4,5], middle:[2,3,4], inner:[1,2,3], bottom:[0,1,2] };
         const FRET_WIDTH = 85, STRING_SPACE = 25, START_Y = 32, NUM_FRETS = 15;
         let currentKey = 'E', currentActiveMode = 'scale';
@@ -162,62 +341,141 @@
         function setupKeyPad() {
             const pad = document.getElementById('keyPad'); pad.innerHTML = '';
             NOTES.forEach(note => {
-                const btn = document.createElement('button'); btn.className = `key-btn px-3 py-1 rounded-sm ${note === currentKey ? 'active' : ''}`; btn.textContent = note;
-                btn.onclick = () => { currentKey = note; document.querySelectorAll('.key-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderFretboard(); };
+                const btn = document.createElement('button'); 
+                btn.className = `key-btn px-3 py-1 rounded-sm ${note === currentKey ? 'active' : ''}`; 
+                btn.textContent = note;
+                btn.onclick = () => { 
+                    currentKey = note; 
+                    document.querySelectorAll('.key-btn').forEach(b => b.classList.remove('active')); 
+                    btn.classList.add('active'); 
+                    renderFretboard(); 
+                };
                 pad.appendChild(btn);
             });
         }
+
         function switchMode(mode) {
-            currentActiveMode = mode; document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            currentActiveMode = mode; 
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
             const btnId = mode === 'arpeggio' ? 'modeArpeggio' : 'mode' + mode.charAt(0).toUpperCase() + mode.slice(1);
             const btn = document.getElementById(btnId); if(btn) btn.classList.add('active');
+            
             document.querySelectorAll('.mode-select').forEach(sel => sel.classList.add('hidden'));
-            const selectEl = document.getElementById(mode + 'Select'); if(selectEl) selectEl.classList.remove('hidden');
-            document.getElementById('selectLabel').innerText = 'Select ' + mode.charAt(0).toUpperCase() + mode.slice(1); renderFretboard();
+            const selectEl = document.getElementById(mode + 'Select'); 
+            if(selectEl) selectEl.classList.remove('hidden');
+            
+            document.getElementById('selectLabel').innerText = 'Select ' + mode.charAt(0).toUpperCase() + mode.slice(1); 
+            renderFretboard();
         }
+
         function getActiveStructure() { return document.getElementById(currentActiveMode + 'Select').value; }
+
         function renderFretboard() {
-            const structureKey = getActiveStructure(), showIntervals = document.getElementById('labelToggle').checked, isOctaveOnly = document.getElementById('octaveToggle').checked, stringGroupName = document.getElementById('stringGroupSelect').value, rootIndex = NOTES.indexOf(currentKey);
-            const activeStrings = STRING_GROUPS[stringGroupName], activeNoteValues = isOctaveOnly ? [rootIndex] : (STRUCTURES[structureKey] || [0]).map(i => (rootIndex + i) % 12);
+            const structureKey = getActiveStructure();
+            const showIntervals = document.getElementById('labelToggle').checked;
+            const isOctaveOnly = document.getElementById('octaveToggle').checked;
+            const stringGroupName = document.getElementById('stringGroupSelect').value;
+            const rootIndex = NOTES.indexOf(currentKey);
+            
+            const activeStrings = STRING_GROUPS[stringGroupName];
+            const activeNoteValues = isOctaveOnly ? [rootIndex] : (STRUCTURES[structureKey] || [0]).map(i => (rootIndex + i) % 12);
+            
             ['fretsG', 'stringsG', 'markersG', 'notesG', 'labelsG'].forEach(id => document.getElementById(id).innerHTML = '');
-            const totalWidth = NUM_FRETS * FRET_WIDTH; const svg = document.getElementById('fretboardSvg'); const bg = document.getElementById('fretboardBg');
-            svg.setAttribute('width', totalWidth + 10); bg.setAttribute('width', totalWidth); svg.setAttribute('viewBox', `-3 0 ${totalWidth + 10} 200`);
+            
+            const totalWidth = NUM_FRETS * FRET_WIDTH; 
+            const svg = document.getElementById('fretboardSvg'); 
+            const bg = document.getElementById('fretboardBg');
+            
+            svg.setAttribute('width', totalWidth + 10); 
+            bg.setAttribute('width', totalWidth); 
+            svg.setAttribute('viewBox', `-3 0 ${totalWidth + 10} 200`);
+            
+            // Fret markers
             [3, 5, 7, 9, 12, 15].forEach(m => {
-                if (m > NUM_FRETS) return; const x = (m * FRET_WIDTH) - (FRET_WIDTH/2); const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                dot.setAttribute("cx", x); dot.setAttribute("cy", 185); dot.setAttribute("r", "3"); dot.setAttribute("fill", "#444"); document.getElementById('markersG').appendChild(dot);
-                if (m === 12) { const dot2 = dot.cloneNode(); dot2.setAttribute("cy", 193); document.getElementById('markersG').appendChild(dot2); }
+                if (m > NUM_FRETS) return; 
+                const x = (m * FRET_WIDTH) - (FRET_WIDTH/2); 
+                const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                dot.setAttribute("cx", x); dot.setAttribute("cy", 185); dot.setAttribute("r", "3"); dot.setAttribute("fill", "#444"); 
+                document.getElementById('markersG').appendChild(dot);
+                if (m === 12) { 
+                    const dot2 = dot.cloneNode(); 
+                    dot2.setAttribute("cy", 193); 
+                    document.getElementById('markersG').appendChild(dot2); 
+                }
             });
+            
+            // Frets and Fret Numbers
             for (let i = 0; i <= NUM_FRETS; i++) {
-                const x = i * FRET_WIDTH; const fret = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                fret.setAttribute("x1", x); fret.setAttribute("y1", 20); fret.setAttribute("x2", x); fret.setAttribute("y2", 170); fret.setAttribute("stroke", i === 0 ? "#c5a059" : "#2a2a2a"); fret.setAttribute("stroke-width", i === 0 ? "5" : "2");
-                document.getElementById('fretsG').appendChild(fret); const num = document.createElementNS("http://www.w3.org/2000/svg", "text");
-                num.setAttribute("x", i === 0 ? 0 : x - FRET_WIDTH/2); num.setAttribute("y", 15); num.setAttribute("class", "fret-num"); num.setAttribute("text-anchor", "middle"); num.textContent = i === 0 ? "NUT" : i; document.getElementById('labelsG').appendChild(num);
+                const x = i * FRET_WIDTH; 
+                const fret = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                fret.setAttribute("x1", x); fret.setAttribute("y1", 20); fret.setAttribute("x2", x); fret.setAttribute("y2", 170); 
+                fret.setAttribute("stroke", i === 0 ? "#c5a059" : "#2a2a2a"); 
+                fret.setAttribute("stroke-width", i === 0 ? "5" : "2");
+                document.getElementById('fretsG').appendChild(fret); 
+                
+                const num = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                num.setAttribute("x", i === 0 ? 0 : x - FRET_WIDTH/2); num.setAttribute("y", 15); 
+                num.setAttribute("class", "fret-num"); 
+                num.setAttribute("text-anchor", "middle"); 
+                num.textContent = i === 0 ? "NUT" : i; 
+                document.getElementById('labelsG').appendChild(num);
             }
+            
+            // Strings and Notes
             for(let s = 0; s < 6; s++) {
-                const y = START_Y + (s * STRING_SPACE); const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                line.setAttribute("x1", 0); line.setAttribute("y1", y); line.setAttribute("x2", totalWidth); line.setAttribute("y2", y); line.setAttribute("stroke", "#444"); line.setAttribute("stroke-width", 1.5 + (s * 0.4));
-                document.getElementById('stringsG').appendChild(line); if (!activeStrings.includes(s)) continue;
+                const y = START_Y + (s * STRING_SPACE); 
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", 0); line.setAttribute("y1", y); line.setAttribute("x2", totalWidth); line.setAttribute("y2", y); 
+                line.setAttribute("stroke", "#444"); 
+                line.setAttribute("stroke-width", 1.5 + (s * 0.4));
+                document.getElementById('stringsG').appendChild(line); 
+                
+                if (!activeStrings.includes(5 - s)) continue; // Inverse string index for logic (0 = low E)
+
                 const openNoteIdx = TUNING[s];
                 for (let f = 0; f <= NUM_FRETS; f++) {
                     const noteIdx = (openNoteIdx + f) % 12;
                     if (activeNoteValues.includes(noteIdx)) {
-                        const relIdx = (noteIdx - rootIndex + 12) % 12, isRoot = noteIdx === rootIndex, label = showIntervals ? INTERVAL_LABELS[relIdx] : NOTES[noteIdx], x = f === 0 ? -15 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
+                        const relIdx = (noteIdx - rootIndex + 12) % 12;
+                        const isRoot = noteIdx === rootIndex;
+                        const label = showIntervals ? INTERVAL_LABELS[relIdx] : NOTES[noteIdx];
+                        const x = f === 0 ? -15 : (f * FRET_WIDTH) - (FRET_WIDTH/2);
+                        
                         let color = "#e5e5e5"; 
                         if (isRoot) color = "#c5a059"; 
-                        else if (currentActiveMode === 'triad' || currentActiveMode === 'arpeggio') { if (relIdx === 3 || relIdx === 4) color = "#94a3b8"; else if (relIdx === 6 || relIdx === 7 || relIdx === 8) color = "#64748b"; else if (relIdx === 10 || relIdx === 11) color = "#475569"; }
-                        else if (currentActiveMode === 'scale' && structureKey === 'blues' && relIdx === 6) color = "#38bdf8";
+                        else if (currentActiveMode === 'triad' || currentActiveMode === 'arpeggio') { 
+                            if (relIdx === 3 || relIdx === 4) color = "#94a3b8"; 
+                            else if (relIdx === 6 || relIdx === 7 || relIdx === 8) color = "#64748b"; 
+                            else if (relIdx === 10 || relIdx === 11) color = "#475569"; 
+                        } else if (currentActiveMode === 'scale' && structureKey === 'blues' && relIdx === 6) {
+                            color = "#38bdf8";
+                        }
                         drawNote(x, y, label, isRoot, color);
                     }
                 }
             }
         }
+
         function drawNote(x, y, label, isRoot, color) {
-            const g = document.createElementNS("http://www.w3.org/2000/svg", "g"); const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", "11"); c.setAttribute("fill", color);
-            if (isRoot) { c.setAttribute("filter", "drop-shadow(0 0 6px rgba(197, 160, 89, 0.6))"); c.setAttribute("stroke", "#000"); c.setAttribute("stroke-width", "1"); }
-            const t = document.createElementNS("http://www.w3.org/2000/svg", "text"); t.setAttribute("x", x); t.setAttribute("y", y + 3.5); t.setAttribute("text-anchor", "middle"); t.setAttribute("fill", "#000"); t.setAttribute("style", "font-size: 9px; font-weight: 900; pointer-events: none;"); t.textContent = label;
-            g.appendChild(c); g.appendChild(t); document.getElementById('notesG').appendChild(g);
+            const g = document.createElementNS("http://www.w3.org/2000/svg", "g"); 
+            const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            c.setAttribute("cx", x); c.setAttribute("cy", y); c.setAttribute("r", "11"); 
+            c.setAttribute("fill", color);
+            if (isRoot) { 
+                c.setAttribute("filter", "drop-shadow(0 0 6px rgba(197, 160, 89, 0.6))"); 
+                c.setAttribute("stroke", "#000"); 
+                c.setAttribute("stroke-width", "1"); 
+            }
+            const t = document.createElementNS("http://www.w3.org/2000/svg", "text"); 
+            t.setAttribute("x", x); t.setAttribute("y", y + 3.5); 
+            t.setAttribute("text-anchor", "middle"); 
+            t.setAttribute("fill", "#000"); 
+            t.setAttribute("style", "font-size: 9px; font-weight: 900; pointer-events: none;"); 
+            t.textContent = label;
+            g.appendChild(c); g.appendChild(t); 
+            document.getElementById('notesG').appendChild(g);
         }
+
         window.onload = () => { setupKeyPad(); renderFretboard(); };
     </script>
 </body>
